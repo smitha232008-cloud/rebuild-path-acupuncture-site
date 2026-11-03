@@ -8,3 +8,4 @@ Public website for The Rebuild Path Acupuncture (Amber Smith, L.Ac.) at Barefoot
 * Booking: https://app.acuityscheduling.com/schedule.php?owner=39409020&calendarID=14435236 or call (928) 444 9411. No payments or health questions on the site.
 * Copy rules: no promises of results; symptoms only, never diagnoses; no Tuina for now; never "myofascial release" or "lymphatic drainage".
 * Hours shown are Barefoot Sage Center's published hours.
+* Live address: https://rebuildpathacupuncture.therebuildpathacu.workers.dev
