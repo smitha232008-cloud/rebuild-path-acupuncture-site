@@ -9,3 +9,4 @@ Public website for The Rebuild Path Acupuncture (Amber Smith, L.Ac.) at Barefoot
 * Copy rules: no promises of results; symptoms only, never diagnoses; no Tuina for now; never "myofascial release" or "lymphatic drainage".
 * Hours shown are Barefoot Sage Center's published hours.
 * Live address: https://rebuildpathacupuncture.therebuildpathacu.workers.dev
+* Images: leaves, needles and cupping were made by Amber in ChatGPT (fine to use). Never add screenshots or images copied from other websites or textbooks.
