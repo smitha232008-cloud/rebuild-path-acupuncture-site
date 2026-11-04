@@ -132,3 +132,21 @@ footer.site b{color:#fff}
   .foot{grid-template-columns:1fr}
   .portrait::before{inset:12px -12px -12px 12px}
 }
+
+/* photography */
+.hero{background:linear-gradient(90deg,rgba(247,244,239,.97) 0%,rgba(247,244,239,.9) 50%,rgba(247,244,239,.55) 100%),url(images/leaves.jpg) center/cover no-repeat}
+.page-head{background:linear-gradient(90deg,rgba(247,244,239,.96) 0%,rgba(247,244,239,.82) 55%,rgba(247,244,239,.35) 100%),url(images/leaves.jpg) center 30%/cover no-repeat;padding:96px 0 80px}
+.tile{padding:0;overflow:hidden}
+.tile img{width:100%;aspect-ratio:3/2;object-fit:cover;transition:transform .5s}
+.tile img.top{object-position:center 18%}
+.tile:hover img{transform:scale(1.04)}
+.tile-body{padding:28px 30px 32px}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.pic{margin:0}
+.pic img{width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:var(--radius);box-shadow:var(--shadow)}
+.band{background:linear-gradient(rgba(31,26,21,.88),rgba(31,26,21,.88)),url(images/leaves.jpg) center/cover no-repeat}
+@media (max-width:900px){
+  .split{grid-template-columns:1fr;gap:36px}
+  .split.rev .pic{order:-1}
+  .hero{background:linear-gradient(rgba(247,244,239,.9),rgba(247,244,239,.9)),url(images/leaves.jpg) right top/cover no-repeat}
+}

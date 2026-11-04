@@ -1,5 +1,5 @@
 from pathlib import Path
-OUT = Path("/home/user/rebuild-path-acupuncture-site/public")
+OUT = Path(__file__).resolve().parent.parent / "public"
 BOOK = "https://app.acuityscheduling.com/schedule.php?owner=39409020&amp;calendarID=14435236"
 TEL = "tel:+19284449411"
 
@@ -97,9 +97,9 @@ page("index.html",
 <section class="soft">
   <div class="wrap">
     <div class="tiles">
-      <a class="tile" href="treatment.html"><span class="num">01</span><h3>What a treatment is</h3><p>Fine needles, a quiet room, and time to rest. Here is what to expect.</p><span class="more">Learn more</span></a>
-      <a class="tile" href="about.html"><span class="num">02</span><h3>Meet Amber</h3><p>Paramedic, CPR instructor and licensed acupuncturist practicing Traditional Chinese Medicine.</p><span class="more">Read her story</span></a>
-      <a class="tile" href="visits.html"><span class="num">03</span><h3>Visits</h3><p>Initial and return visits, plus couples acupuncture for two.</p><span class="more">See visits</span></a>
+      <a class="tile" href="treatment.html"><img src="images/needles.jpg" alt="Sterile single use acupuncture needles on a tray" width="1200" height="800" loading="lazy"><div class="tile-body"><span class="num">01</span><h3>What a treatment is</h3><p>Fine needles, a quiet room, and time to rest. Here is what to expect.</p><span class="more">Learn more</span></div></a>
+      <a class="tile" href="about.html"><img class="top" src="images/amber-smith-acupuncturist.jpg" alt="Amber Smith, L.Ac." width="640" height="800" loading="lazy"><div class="tile-body"><span class="num">02</span><h3>Meet Amber</h3><p>Paramedic, CPR instructor and licensed acupuncturist practicing Traditional Chinese Medicine.</p><span class="more">Read her story</span></div></a>
+      <a class="tile" href="visits.html"><img src="images/cupping.jpg" alt="Glass cupping cups on folded linen" width="1200" height="800" loading="lazy"><div class="tile-body"><span class="num">03</span><h3>Visits</h3><p>Initial and return visits, plus couples acupuncture for two.</p><span class="more">See visits</span></div></a>
     </div>
   </div>
 </section>
@@ -112,17 +112,23 @@ page("treatment.html",
      f"""
 <section class="page-head"><div class="wrap"><p class="eyebrow">Treatment</p><h1>What a treatment is</h1></div></section>
 <section>
-  <div class="wrap narrow prose">
+  <div class="wrap split">
+    <figure class="pic"><img src="images/needles.jpg" alt="Sterile single use acupuncture needles on a tray" width="1200" height="800"></figure>
+    <div class="prose">
     <p class="lead">Fine, single use needles are placed at specific points and left in while you rest.</p>
     <p>Each needle is solid and about the width of a hair. Most people feel a mild, dull heaviness or a gentle warmth around the needle, then settle in. Some people fall asleep, and others drift into deep relaxation. Both are part of the treatment.</p>
     <p>The points follow a system developed and refined over more than two thousand years. Which points to use, how deep, and how many is the clinical judgment Amber trained for, and it changes from visit to visit as you do.</p>
+    </div>
   </div>
 </section>
 <section class="soft">
-  <div class="wrap narrow">
-    <h2>Other modalities</h2>
-    <p>These may be used when indicated. Not every modality is used in every visit.</p>
-    <ul class="chips left"><li>Electroacupuncture</li><li>Cupping</li><li>Gua sha</li><li>Hot and cold stone</li><li>Red light therapy</li><li>Ear seeds</li></ul>
+  <div class="wrap split rev">
+    <div>
+      <h2>Other modalities</h2>
+      <p>These may be used when indicated. Not every modality is used in every visit.</p>
+      <ul class="chips left"><li>Electroacupuncture</li><li>Cupping</li><li>Gua sha</li><li>Hot and cold stone</li><li>Red light therapy</li><li>Ear seeds</li></ul>
+    </div>
+    <figure class="pic"><img src="images/cupping.jpg" alt="Glass cupping cups on folded linen" width="1200" height="800" loading="lazy"></figure>
   </div>
 </section>
 <section>
