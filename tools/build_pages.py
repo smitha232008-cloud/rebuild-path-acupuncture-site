@@ -48,7 +48,7 @@ def page(file, title, desc, body, schema=False):
 </main>
 <section class="band">
   <div class="wrap band-in">
-    <div><h2>Ready to begin?</h2><p>Book online in a minute, or call the Center and we will find a time that works.</p></div>
+    <div><h2>Take the next step on your journey.</h2><p>Book your first visit online, or call the Center and we will find a time that works for you.</p></div>
     <div class="actions"><a class="btn light" href="{BOOK}">Book online</a><a class="btn outline-light" href="{TEL}">Call (928) 444 9411</a></div>
   </div>
 </section>
@@ -66,8 +66,18 @@ def page(file, title, desc, body, schema=False):
     (OUT / file).write_text(html)
 
 
-SYMPTOMS = ["Back pain", "Neck and shoulder pain", "Foot pain", "Joint pain", "Headaches", "Sleep issues",
-            "Stress and overwhelm", "Muscle tension", "Digestive discomfort", "Menstrual discomfort", "Recovery after injury"]
+GROUPS = [
+    ("Pain and movement", ["Back pain", "Neck and shoulder pain", "Hip and knee pain", "Foot and heel pain", "Joint stiffness",
+                           "Wrist and hand discomfort", "Pain that travels down the leg", "Muscle tension",
+                           "Recovery after injury or surgery", "Sports recovery"]),
+    ("Head and face", ["Headaches", "Jaw tension and clenching", "Sinus congestion"]),
+    ("Sleep, stress and mood", ["Trouble falling or staying asleep", "Stress and overwhelm", "Feeling anxious or on edge",
+                                "Low mood", "Feeling burned out", "Low energy and fatigue"]),
+    ("Digestion", ["Bloating and digestive discomfort", "Nausea", "Irregular digestion"]),
+    ("Women's health", ["Menstrual cramps and discomfort", "Irregular cycles", "Hot flashes and night sweats"]),
+]
+help_groups = "".join(f'<div class="group"><h3>{g}</h3><ul>' + "".join(f"<li>{i}</li>" for i in items) + "</ul></div>" for g, items in GROUPS)
+SYMPTOMS = [i for _, items in GROUPS for i in items]
 chips = "".join(f"<li>{s}</li>" for s in SYMPTOMS)
 
 # Home
@@ -75,31 +85,41 @@ page("index.html",
      "Acupuncture in Flagstaff, AZ | Amber Smith, L.Ac. | The Rebuild Path Acupuncture",
      "Acupuncture and Traditional Chinese Medicine in downtown Flagstaff with Amber Smith, L.Ac., at Barefoot Sage Center. Back pain, neck pain, headaches, sleep issues, stress and more. Call (928) 444 9411.",
      f"""
-<section class="hero">
-  <div class="wrap hero-in">
+<section class="hero full">
+  <div class="wrap">
     <div class="hero-text">
-      <p class="eyebrow">Downtown Flagstaff · Barefoot Sage Center</p>
-      <h1>Acupuncture in Flagstaff</h1>
-      <p class="lead">Acupuncture is one branch of Traditional Chinese Medicine, a complete system of care that looks at the whole person and how every part of your life connects.</p>
-      <p>Amber Smith, L.Ac. holds a Master of Acupuncture and a degree in molecular and cellular biology, and brings about twelve years in emergency medicine to this work. If you are ready to take a step in a new direction for your health, this is a good place to start.</p>
+      <p class="eyebrow">Acupuncture · Downtown Flagstaff</p>
+      <h1>Acupuncture and Traditional Chinese Medicine in Flagstaff</h1>
+      <p class="lead">Unhurried, personal care for pain, stress, sleep and more, at Barefoot Sage Center.</p>
       <div class="actions"><a class="btn" href="{BOOK}">Book online</a><a class="btn outline" href="{TEL}">Call (928) 444 9411</a></div>
     </div>
-    <figure class="portrait"><img src="images/amber-smith-acupuncturist.jpg" alt="Amber Smith, licensed acupuncturist in Flagstaff" width="640" height="800"></figure>
   </div>
 </section>
 <section>
-  <div class="wrap center">
-    <p class="eyebrow">How we can help</p>
-    <h2>What people come in for</h2>
-    <ul class="chips">{chips}</ul>
+  <div class="wrap narrow center">
+    <p class="eyebrow">Our approach</p>
+    <h2>A different kind of care</h2>
+    <p class="lead">Traditional Chinese Medicine looks at the whole person, not just the symptom that brought you in. Every visit starts with listening, and every treatment is built around what your body needs that day.</p>
   </div>
 </section>
 <section class="soft">
   <div class="wrap">
-    <div class="tiles">
-      <a class="tile" href="treatment.html"><img src="images/needles.jpg" alt="Sterile single use acupuncture needles on a tray" width="1200" height="800" loading="lazy"><div class="tile-body"><span class="num">01</span><h3>What a treatment is</h3><p>Fine needles, a quiet room, and time to rest. Here is what to expect.</p><span class="more">Learn more</span></div></a>
-      <a class="tile" href="about.html"><img class="top" src="images/amber-smith-acupuncturist.jpg" alt="Amber Smith, L.Ac." width="640" height="800" loading="lazy"><div class="tile-body"><span class="num">02</span><h3>Meet Amber</h3><p>Paramedic, CPR instructor and licensed acupuncturist practicing Traditional Chinese Medicine.</p><span class="more">Read her story</span></div></a>
-      <a class="tile" href="visits.html"><img src="images/cupping.jpg" alt="Glass cupping cups on folded linen" width="1200" height="800" loading="lazy"><div class="tile-body"><span class="num">03</span><h3>Visits</h3><p>Initial and return visits, plus couples acupuncture for two.</p><span class="more">See visits</span></div></a>
+    <div class="center"><p class="eyebrow">Explore</p><h2>Find your way around</h2></div>
+    <div class="tiles four">
+      <a class="tile" href="treatment.html#help"><img src="images/leaves.jpg" alt="Green leaves and soft shadows on a cream wall" width="1672" height="941" loading="lazy"><div class="tile-body"><h3>What acupuncture can help with</h3><p>From back pain to trouble sleeping, see what brings people in.</p><span class="more">See the list</span></div></a>
+      <a class="tile" href="treatment.html"><img src="images/needles.jpg" alt="Sterile single use acupuncture needles on a tray" width="1200" height="800" loading="lazy"><div class="tile-body"><h3>What a treatment is</h3><p>Fine needles, a quiet room, and time to rest.</p><span class="more">Learn more</span></div></a>
+      <a class="tile" href="visits.html"><img src="images/cupping.jpg" alt="Glass cupping cups on folded linen" width="1200" height="800" loading="lazy"><div class="tile-body"><h3>Visits</h3><p>Initial, return and couples visits.</p><span class="more">See visits</span></div></a>
+      <a class="tile" href="about.html"><img class="top" src="images/amber-smith-acupuncturist.jpg" alt="Amber Smith, L.Ac." width="640" height="800" loading="lazy"><div class="tile-body"><h3>Meet Amber</h3><p>Paramedic turned acupuncturist.</p><span class="more">Read her story</span></div></a>
+    </div>
+  </div>
+</section>
+<section>
+  <div class="wrap">
+    <div class="center"><p class="eyebrow">How it works</p><h2>Three simple steps</h2></div>
+    <div class="howto">
+      <div><span class="num">1</span><h3>Book</h3><p>Online or by phone, in a minute.</p></div>
+      <div><span class="num">2</span><h3>Your first visit</h3><p>A full health history and a conversation, then your first treatment.</p></div>
+      <div><span class="num">3</span><h3>Follow up</h3><p>Return visits adjusted to what has changed.</p></div>
     </div>
   </div>
 </section>
@@ -141,8 +161,12 @@ page("treatment.html",
     </div>
   </div>
 </section>
-<section class="soft">
-  <div class="wrap center"><h2>People come in for</h2><ul class="chips">{chips}</ul></div>
+<section class="soft" id="help">
+  <div class="wrap">
+    <div class="center narrow" style="margin:0 auto"><p class="eyebrow">How acupuncture can help</p><h2>What acupuncture can help with</h2><p>People come to acupuncture for a wide range of concerns. Here are some of the most common.</p></div>
+    <div class="groups">{help_groups}</div>
+    <p class="center muted" style="margin-top:36px">Acupuncture works alongside the care you already receive. Not sure if it fits what you are dealing with? Call <a href="{TEL}">(928) 444 9411</a>.</p>
+  </div>
 </section>
 """)
 
@@ -174,7 +198,7 @@ page("about.html",
 
 # Visits
 VISITS = [
-    ("Initial Visit", "90 minutes", "A full history, a real conversation, then your first treatment, built around what your body needs that day. Please arrive 30 minutes early to complete your new patient paperwork."),
+    ("Initial Visit", "90 minutes", "A full history, a conversation, then your first treatment, built around what your body needs that day. Please arrive 30 minutes early to complete your new patient paperwork."),
     ("Return Visit", "60 minutes", "A short check in on how you have felt since your last treatment and what has shifted, then the session is adjusted to match."),
     ("Couples Acupuncture, Initial Visit", "150 minutes for two", "Experience acupuncture with someone you love, treated side by side in the same room by one practitioner. Book this visit when either of you is new to the practice. Each person completes their own paperwork here, so please arrive 1 hour early. If something comes up that you would rather discuss privately, just say so."),
     ("Couples Acupuncture, Return Visit", "75 minutes for two", "Together, for two returning patients. A short check in for each person, then treatment adjusted to what each of you needs that day."),
