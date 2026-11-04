@@ -26,6 +26,7 @@ def page(file, title, desc, body, schema=False):
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="google-site-verification" content="A9I97ulmOd-KFU6-9-u8Sgs333k6SVJPT_6PX_2Ohlo">
 <title>{title}</title>
 <meta name="description" content="{desc}">
 <meta property="og:title" content="{title}">
