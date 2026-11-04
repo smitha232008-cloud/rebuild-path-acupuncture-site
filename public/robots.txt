@@ -1,2 +1,4 @@
 User-agent: *
 Allow: /
+
+Sitemap: https://rebuildpathacupuncture.therebuildpathacu.workers.dev/sitemap.xml
