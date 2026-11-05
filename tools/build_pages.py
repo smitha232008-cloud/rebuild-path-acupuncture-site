@@ -91,7 +91,7 @@ page("index.html",
     <div class="hero-text">
       <p class="eyebrow">Acupuncture · Downtown Flagstaff</p>
       <h1>Acupuncture and Traditional Chinese Medicine in Flagstaff</h1>
-      <p class="lead">Unhurried, personal care for pain, stress, sleep and more, at Barefoot Sage Center.</p>
+      <p class="lead">Personal, thoughtful care for pain, stress, sleep and more, at Barefoot Sage Center.</p>
       <div class="actions"><a class="btn" href="{BOOK}">Book online</a><a class="btn outline" href="{TEL}">Call (928) 444 9411</a></div>
     </div>
   </div>
