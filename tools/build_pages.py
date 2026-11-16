@@ -12,7 +12,7 @@ EMAIL_ACU = "therebuildpathacu@gmail.com"
 SKOOL = "https://www.skool.com/the-rebuild-path-6648/about"
 SKOOL_CLASSROOM = "https://www.skool.com/the-rebuild-path-6648/classroom"
 DISCOVERY = "https://calendly.com/ambersmith2008/discovery"
-SITE = "https://rebuildpathacupuncture.therebuildpathacu.workers.dev"
+SITE = "https://therebuildpath.org"
 INSTAGRAM = "https://www.instagram.com/therebuildpath/"
 FACEBOOK = "https://www.facebook.com/profile.php?id=61582631524025"
 
