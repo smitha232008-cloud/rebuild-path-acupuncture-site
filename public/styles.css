@@ -253,3 +253,5 @@ details.qa[open]{border-color:var(--gold)}
 .form button[disabled]{opacity:.75;cursor:progress}
 .form-done{background:var(--page);border:1px solid var(--gold);border-radius:22px;padding:40px 34px;box-shadow:var(--shadow)}
 .form-done h2{font-size:clamp(28px,3vw,36px)}
+.page-head.photo.light{background:linear-gradient(90deg,rgba(21,42,30,.9) 0%,rgba(21,42,30,.66) 38%,rgba(21,42,30,.15) 72%,rgba(21,42,30,0) 100%),var(--bg) center 24%/cover no-repeat}
+@media (max-width:900px){.page-head.photo.light{background:linear-gradient(180deg,rgba(21,42,30,.35) 0%,rgba(21,42,30,.8) 55%,rgba(21,42,30,.9) 100%),var(--bg) center 30%/cover no-repeat}}

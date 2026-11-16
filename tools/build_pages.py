@@ -429,7 +429,7 @@ page("about.html",
      "Meet Amber Smith, L.Ac. | Founder of The Rebuild Path, Flagstaff, AZ",
      "Amber Smith, L.Ac., founder of The Rebuild Path, is a licensed acupuncturist, paramedic and CPR instructor in Flagstaff, Arizona.",
      f"""
-<section class="page-head dark photo" style="--bg:url(images/02-home-journey-meadow.webp)">
+<section class="page-head dark photo light" style="--bg:url(images/11-summit-trail-sunrise.webp)">
   {LEAVES}
   <div class="wrap"><p class="eyebrow">About</p><h1>Meet Amber</h1><p class="lead">Founder of The Rebuild Path.</p></div>
 </section>
