@@ -251,7 +251,7 @@ page("index.html",
       {TRAIL_SVG}
       <div class="stop">
         <div class="pic"><img src="images/09-acupuncture-care-ambience.webp" alt="Neutral treatment room with linens and warm natural light" width="1000" height="1250" loading="lazy" style="object-position:center 62%"></div>
-        <div class="txt"><span class="marker">1</span><p class="tag">The Rebuild Path Acupuncture</p><h3>Acupuncture and acupressure</h3><p>Learn what acupuncture and acupressure are, and how Traditional Chinese Medicine looks at the whole person, not just the symptom.</p><a class="more" href="acupuncture.html">Explore acupuncture</a></div>
+        <div class="txt"><span class="marker">1</span><p class="tag">The Rebuild Path Acupuncture</p><h3>Acupuncture and Acupressure</h3><p>Learn what acupuncture and acupressure are, and how Traditional Chinese Medicine looks at the whole person, not just the symptom.</p><a class="more" href="acupuncture.html">Explore acupuncture</a></div>
       </div>
       <div class="stop flip">
         <div class="pic"><img src="images/07-education-learning-journal.webp" alt="Open blank journal, fountain pen, tea, and botanical shadows" width="1000" height="1250" loading="lazy" style="object-position:center 60%"></div>
@@ -290,7 +290,7 @@ page("acupuncture.html",
   {LEAVES}
   <div class="wrap">
     <p class="eyebrow">The Rebuild Path Acupuncture</p>
-    <h1>Acupuncture and acupressure</h1>
+    <h1>Acupuncture and Acupressure</h1>
     <p class="lead">Traditional Chinese Medicine with Amber Smith, L.Ac., licensed acupuncturist and NCBAHM Certified Diplomate in Acupuncture.</p>
   </div>
 </section>
@@ -480,7 +480,7 @@ page("faq.html",
 <div class="faq-tabs"><div class="wrap"><a href="#acupuncture">Acupuncture</a><a href="#education">Education</a></div></div>
 <section id="acupuncture" class="faq-sec">
   <div class="wrap narrow">
-    <p class="eyebrow">The Rebuild Path Acupuncture</p><h2>Acupuncture and acupressure</h2>
+    <p class="eyebrow">The Rebuild Path Acupuncture</p><h2>Acupuncture and Acupressure</h2>
     {faq_list(FAQ_ACU)}
   </div>
 </section>
