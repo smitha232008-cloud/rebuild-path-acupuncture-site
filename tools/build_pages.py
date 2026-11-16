@@ -1,5 +1,9 @@
 """Builds the public pages for The Rebuild Path website. Edit text here, then run: python3 tools/build_pages.py"""
+import os
 from pathlib import Path
+
+# The FAQ stays off the live site until Amber approves it (Nov 16, 2026). Build a preview with FAQ_LIVE=1.
+FAQ_LIVE = os.environ.get("FAQ_LIVE") == "1"
 
 OUT = Path(__file__).resolve().parent.parent / "public"
 
@@ -16,7 +20,10 @@ SITE = "https://therebuildpath.org"
 INSTAGRAM = "https://www.instagram.com/therebuildpath/"
 FACEBOOK = "https://www.facebook.com/profile.php?id=61582631524025"
 
-NAV = [("index.html", "Home"), ("acupuncture.html", "Acupuncture"), ("education.html", "Education"), ("faq.html", "FAQ"), ("about.html", "Meet Amber"), ("contact.html", "Contact")]
+NAV = [("index.html", "Home"), ("acupuncture.html", "Acupuncture"), ("education.html", "Education")] + ([("faq.html", "FAQ")] if FAQ_LIVE else []) + [("about.html", "Meet Amber"), ("contact.html", "Contact")]
+FAQ_FOOT = '<p><a href="faq.html">FAQ</a></p>' if FAQ_LIVE else ""
+FAQ_ACU_LINK = ' Have questions? See the <a href="faq.html#acupuncture">acupuncture FAQ</a>.' if FAQ_LIVE else ""
+FAQ_EDU_LINK = '<p class="fine" style="margin-top:14px">Questions? See the <a href="faq.html#education">education FAQ</a>.</p>' if FAQ_LIVE else ""
 
 # Upcoming events. Each card hides itself in the browser once "ends" has passed.
 EVENTS = [
@@ -166,7 +173,7 @@ def page(file, title, desc, body, schema=False):
       <a class="brand" href="index.html"><img src="images/logo.jpg" alt="" width="44" height="44"><span><b>THE REBUILD PATH</b><small>Rebuild Mind. Rebuild Body. Rebuild Spirit.</small></span></a>
       <p>Empowering you to reclaim your own choices in health and lifestyle.</p>
     </div>
-    <div><h4>Explore</h4><p><a href="acupuncture.html">Acupuncture</a></p><p><a href="education.html">Education</a></p><p><a href="faq.html">FAQ</a></p><p><a href="about.html">Meet Amber</a></p><p><a href="contact.html">Contact</a></p></div>
+    <div><h4>Explore</h4><p><a href="acupuncture.html">Acupuncture</a></p><p><a href="education.html">Education</a></p>{FAQ_FOOT}<p><a href="about.html">Meet Amber</a></p><p><a href="contact.html">Contact</a></p></div>
     <div><h4>Connect</h4><p><a href="{SKOOL}">Skool community</a></p><p><a href="{DISCOVERY}">Discovery call</a></p><p><a href="{INSTAGRAM}">Instagram</a></p><p><a href="{FACEBOOK}">Facebook</a></p></div>
     <div><h4>Contact</h4><p class="lbl">Mailing address</p><p>{ADDRESS}</p><p>Online, by appointment only</p><p><a href="{TEL}">Call {PHONE}</a></p><p><a href="{SMS}">Text {PHONE}</a></p><p><a href="mailto:{EMAIL_EDU}">{EMAIL_EDU}</a></p><p><a href="mailto:{EMAIL_ACU}">{EMAIL_ACU}</a></p></div>
   </div>
@@ -321,7 +328,7 @@ page("acupuncture.html",
         <li>Takes a few minutes, at home, at work or before bed</li>
         <li>Pairs well with slow breathing and gentle movement</li>
       </ul>
-      <p>Want personal guidance? Amber offers <a href="education.html#consultations">online one on one consultations</a>. Have questions? See the <a href="faq.html#acupuncture">acupuncture FAQ</a>.</p>
+      <p>Want personal guidance? Amber offers <a href="education.html#consultations">online one on one consultations</a>.{FAQ_ACU_LINK}</p>
     </div>
   </div>
 </section>
@@ -371,7 +378,7 @@ page("education.html",
       <p>A private online session on how acupressure, meditation and movement can help you reconnect with your body. You learn points and practices you can use on your own, at your own pace, and leave with a plan that fits your day.</p>
       <ul class="ticks"><li>45 minutes, online</li><li>Coaching and education only, no hands on treatment</li><li>Start with a free 15 minute discovery call</li></ul>
       <div class="actions"><a class="btn" href="{DISCOVERY}">Book a free discovery call</a><a class="btn ghost" href="{SMS}">Text to schedule a consultation</a></div>
-      <p class="fine" style="margin-top:14px">Questions? See the <a href="faq.html#education">education FAQ</a>.</p>
+      {FAQ_EDU_LINK}
     </div>
     <div class="cards" style="grid-template-columns:1fr;margin-top:0">
       <div class="card"><div class="ico">{ICON['hand']}</div><h3>Acupressure</h3><p>Points you can find and press yourself, any time you need them.</p></div>
@@ -468,7 +475,8 @@ FAQ_EDU = [
 def faq_list(items):
     return "".join(f'<details class="qa"><summary>{q}</summary><div class="ans"><p>{a}</p></div></details>' for q, a in items)
 
-page("faq.html",
+if FAQ_LIVE:
+  page("faq.html",
      "Frequently Asked Questions | Acupuncture and Education | The Rebuild Path",
      "Answers to common questions about acupuncture, acupressure, online consultations, workshops and CPR classes with The Rebuild Path in Flagstaff, Arizona.",
      f"""

@@ -2,6 +2,10 @@
   "name": "rebuildpathacupuncture",
   "compatibility_date": "2025-06-01",
   "workers_dev": false,
+  "routes": [
+    { "pattern": "therebuildpath.org", "custom_domain": true },
+    { "pattern": "www.therebuildpath.org", "custom_domain": true }
+  ],
   "assets": {
     "directory": "./public"
   }
