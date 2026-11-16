@@ -183,6 +183,11 @@ def page(file, title, desc, body, schema=False):
 </body>
 </html>
 """
+    # Cloudflare serves pages without ".html", so link to the short addresses (no redirect hop).
+    import re
+    html = html.replace('href="index.html"', 'href="/"')
+    html = re.sub(r'href="([a-z]+)\.html(#[a-z]+)?"', lambda m: f'href="/{m.group(1)}{m.group(2) or ""}"', html)
+    html = html.replace(f'{SITE}/thanks.html', f'{SITE}/thanks')
     (OUT / file).write_text(html)
 
 
