@@ -21,13 +21,13 @@
   <div class="bar">
     <a class="brand" href="index.html"><img src="images/logo.jpg" alt="" width="44" height="44"><span><b>THE REBUILD PATH</b><small>Flagstaff, Arizona</small></span></a>
     <button class="menu-btn" aria-expanded="false" aria-controls="mainnav">Menu</button>
-    <nav class="main" id="mainnav" aria-label="Main"><a href="index.html">Home</a><a href="acupuncture.html">Acupuncture</a><a href="education.html">Education</a><a href="about.html" class="on" aria-current="page">Meet Amber</a></nav>
+    <nav class="main" id="mainnav" aria-label="Main"><a href="index.html">Home</a><a href="acupuncture.html">Acupuncture</a><a href="education.html">Education</a><a href="faq.html">FAQ</a><a href="about.html" class="on" aria-current="page">Meet Amber</a><a href="contact.html">Contact</a></nav>
     <a class="btn gold small" href="https://www.skool.com/the-rebuild-path-6648/about">Join the community</a>
   </div>
 </header>
 <main>
 
-<section class="page-head dark">
+<section class="page-head dark photo" style="--bg:url(images/02-home-journey-meadow.webp)">
   <svg class="leafs" viewBox="0 0 300 240" aria-hidden="true">
   <use href="#maple" x="170" y="10" width="100" height="100" fill="#A4502A" transform="rotate(18 220 60)"/>
   <use href="#leaf" x="112" y="22" width="34" height="68" fill="#C8963E" transform="rotate(-38 129 56)"/>
@@ -54,7 +54,7 @@
       <p>That question has taken me from emergency care as a paramedic to teaching CPR, practicing acupuncture, and creating guided workbooks for personal reflection. My training in molecular and cellular biology and my years in emergency medicine shape the curiosity and attention I bring to everything I teach.</p>
       <p>I enjoy making complicated things understandable. That starts with listening to what you're experiencing, how it affects your day, and what you'd like to be able to do or feel differently.</p>
       <p>What I love most is building a relationship over time: learning what matters to you, noticing changes together, and adjusting along the way. My goal is to help you understand your body and feel confident taking an active role in your own well being.</p>
-      <div class="actions"><a class="btn" href="education.html#consultations">Book a consultation</a><a class="btn ghost" href="https://www.skool.com/the-rebuild-path-6648/about">Join the community</a></div>
+      <div class="actions"><a class="btn" href="https://calendly.com/ambersmith2008/discovery">Book a free discovery call</a><a class="btn ghost" href="https://www.skool.com/the-rebuild-path-6648/about">Join the community</a></div>
     </div>
   </div>
 </section>
@@ -67,9 +67,9 @@
       <a class="brand" href="index.html"><img src="images/logo.jpg" alt="" width="44" height="44"><span><b>THE REBUILD PATH</b><small>Rebuild Mind. Rebuild Body. Rebuild Spirit.</small></span></a>
       <p>Empowering you to reclaim your own choices in health and lifestyle.</p>
     </div>
-    <div><h4>Explore</h4><p><a href="acupuncture.html">Acupuncture</a></p><p><a href="education.html">Education</a></p><p><a href="about.html">Meet Amber</a></p></div>
-    <div><h4>Connect</h4><p><a href="https://www.skool.com/the-rebuild-path-6648/about">Skool community</a></p><p><a href="https://www.instagram.com/therebuildpath/">Instagram</a></p><p><a href="https://www.facebook.com/profile.php?id=61582631524025">Facebook</a></p></div>
-    <div><h4>Contact</h4><p>2700 S Woodlands Village Blvd<br>Ste 300 PMB 212<br>Flagstaff, AZ 86001</p><p>By appointment only</p><p><a href="tel:+19283166511">Call (928) 316 6511</a></p><p><a href="sms:+19283166511">Text (928) 316 6511</a></p><p><a href="mailto:therebuildpath@gmail.com">therebuildpath@gmail.com</a></p><p><a href="mailto:therebuildpathacu@gmail.com">therebuildpathacu@gmail.com</a></p></div>
+    <div><h4>Explore</h4><p><a href="acupuncture.html">Acupuncture</a></p><p><a href="education.html">Education</a></p><p><a href="faq.html">FAQ</a></p><p><a href="about.html">Meet Amber</a></p><p><a href="contact.html">Contact</a></p></div>
+    <div><h4>Connect</h4><p><a href="https://www.skool.com/the-rebuild-path-6648/about">Skool community</a></p><p><a href="https://calendly.com/ambersmith2008/discovery">Discovery call</a></p><p><a href="https://www.instagram.com/therebuildpath/">Instagram</a></p><p><a href="https://www.facebook.com/profile.php?id=61582631524025">Facebook</a></p></div>
+    <div><h4>Contact</h4><p class="lbl">Mailing address</p><p>2700 S Woodlands Village Blvd<br>Ste 300 PMB 212<br>Flagstaff, AZ 86001</p><p>Online, by appointment only</p><p><a href="tel:+19283166511">Call (928) 316 6511</a></p><p><a href="sms:+19283166511">Text (928) 316 6511</a></p><p><a href="mailto:therebuildpath@gmail.com">therebuildpath@gmail.com</a></p><p><a href="mailto:therebuildpathacu@gmail.com">therebuildpathacu@gmail.com</a></p></div>
   </div>
   <div class="wrap copy"><span>© 2026 The Rebuild Path LLC and The Rebuild Path Acupuncture LLC</span><span>Flagstaff, Arizona</span></div>
 </footer>
@@ -78,7 +78,7 @@
   var now=Date.now();
   document.querySelectorAll('[data-events]').forEach(function(box){
     var left=0;
-    box.querySelectorAll('.event').forEach(function(ev){
+    box.querySelectorAll('.event[data-ends]').forEach(function(ev){
       if(Date.parse(ev.getAttribute('data-ends'))<now){ev.remove();}else{left++;}
     });
     if(!left){var e=box.querySelector('[data-empty]'); if(e) e.hidden=false;}

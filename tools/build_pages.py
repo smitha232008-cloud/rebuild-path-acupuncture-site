@@ -10,10 +10,13 @@ ADDRESS = "2700 S Woodlands Village Blvd<br>Ste 300 PMB 212<br>Flagstaff, AZ 860
 EMAIL_EDU = "therebuildpath@gmail.com"
 EMAIL_ACU = "therebuildpathacu@gmail.com"
 SKOOL = "https://www.skool.com/the-rebuild-path-6648/about"
+SKOOL_CLASSROOM = "https://www.skool.com/the-rebuild-path-6648/classroom"
+DISCOVERY = "https://calendly.com/ambersmith2008/discovery"
+SITE = "https://rebuildpathacupuncture.therebuildpathacu.workers.dev"
 INSTAGRAM = "https://www.instagram.com/therebuildpath/"
 FACEBOOK = "https://www.facebook.com/profile.php?id=61582631524025"
 
-NAV = [("index.html", "Home"), ("acupuncture.html", "Acupuncture"), ("education.html", "Education"), ("about.html", "Meet Amber")]
+NAV = [("index.html", "Home"), ("acupuncture.html", "Acupuncture"), ("education.html", "Education"), ("faq.html", "FAQ"), ("about.html", "Meet Amber"), ("contact.html", "Contact")]
 
 # Upcoming events. Each card hides itself in the browser once "ends" has passed.
 EVENTS = [
@@ -28,6 +31,26 @@ EVENTS = [
         link="https://square.link/u/eWQnmE1y",
         cta="Reserve your spot",
         pages=["index.html", "acupuncture.html", "education.html"],
+    ),
+]
+
+# Ongoing offers with no date. Always shown after the dated events.
+ONGOING = [
+    dict(
+        title="Goals Workshop",
+        kind="In the Skool classroom",
+        text="Work through the Goals workshop at your own pace in The Rebuild Path classroom on Skool, with the community there for support.",
+        link=SKOOL_CLASSROOM,
+        cta="Open the classroom",
+        pages=["index.html", "education.html"],
+    ),
+    dict(
+        title="Free 15 minute discovery call",
+        kind="Online",
+        text="Not sure where to start? Book a short, no pressure call with Amber to talk through what you are working on and which next step fits.",
+        link=DISCOVERY,
+        cta="Book a discovery call",
+        pages=["index.html", "education.html"],
     ),
 ]
 
@@ -72,17 +95,26 @@ def event_cards(file):
   <div><p class="tag">{e['kind']}</p><h3>{e['title']}</h3><div class="meta">{meta}</div><p>{e['text']}</p></div>
   <div><div class="price">{e['price']}</div><a class="btn" href="{e['link']}">{e['cta']}</a></div>
 </article>""")
+    ongoing = "".join(f"""<article class="event ongoing">
+  <div class="date"><small>Anytime</small><b>{GOAL if o['link'] == SKOOL_CLASSROOM else CALL}</b><span>{o['kind']}</span></div>
+  <div><p class="tag">{o['kind']}</p><h3>{o['title']}</h3><p>{o['text']}</p></div>
+  <div><a class="btn ghost" href="{o['link']}">{o['cta']}</a></div>
+</article>""" for o in ONGOING if file in o["pages"])
     return f"""<div class="events" data-events>{''.join(out)}
 <p class="empty" data-empty hidden>New dates are on the way. Follow along on <a href="{INSTAGRAM}">Instagram</a> or <a href="{FACEBOOK}">Facebook</a>, or join the <a href="{SKOOL}">Skool community</a> to hear first.</p>
+{ongoing}
 </div>"""
 
+
+GOAL = '<svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#E2BC72" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5" fill="#E2BC72"/></svg>'
+CALL = '<svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#E2BC72" stroke-width="1.6" stroke-linejoin="round"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="M16 10l5-3v10l-5-3z"/></svg>'
 
 SCRIPT = """<script>
 (function(){
   var now=Date.now();
   document.querySelectorAll('[data-events]').forEach(function(box){
     var left=0;
-    box.querySelectorAll('.event').forEach(function(ev){
+    box.querySelectorAll('.event[data-ends]').forEach(function(ev){
       if(Date.parse(ev.getAttribute('data-ends'))<now){ev.remove();}else{left++;}
     });
     if(!left){var e=box.querySelector('[data-empty]'); if(e) e.hidden=false;}
@@ -134,9 +166,9 @@ def page(file, title, desc, body, schema=False):
       <a class="brand" href="index.html"><img src="images/logo.jpg" alt="" width="44" height="44"><span><b>THE REBUILD PATH</b><small>Rebuild Mind. Rebuild Body. Rebuild Spirit.</small></span></a>
       <p>Empowering you to reclaim your own choices in health and lifestyle.</p>
     </div>
-    <div><h4>Explore</h4><p><a href="acupuncture.html">Acupuncture</a></p><p><a href="education.html">Education</a></p><p><a href="about.html">Meet Amber</a></p></div>
-    <div><h4>Connect</h4><p><a href="{SKOOL}">Skool community</a></p><p><a href="{INSTAGRAM}">Instagram</a></p><p><a href="{FACEBOOK}">Facebook</a></p></div>
-    <div><h4>Contact</h4><p>{ADDRESS}</p><p>By appointment only</p><p><a href="{TEL}">Call {PHONE}</a></p><p><a href="{SMS}">Text {PHONE}</a></p><p><a href="mailto:{EMAIL_EDU}">{EMAIL_EDU}</a></p><p><a href="mailto:{EMAIL_ACU}">{EMAIL_ACU}</a></p></div>
+    <div><h4>Explore</h4><p><a href="acupuncture.html">Acupuncture</a></p><p><a href="education.html">Education</a></p><p><a href="faq.html">FAQ</a></p><p><a href="about.html">Meet Amber</a></p><p><a href="contact.html">Contact</a></p></div>
+    <div><h4>Connect</h4><p><a href="{SKOOL}">Skool community</a></p><p><a href="{DISCOVERY}">Discovery call</a></p><p><a href="{INSTAGRAM}">Instagram</a></p><p><a href="{FACEBOOK}">Facebook</a></p></div>
+    <div><h4>Contact</h4><p class="lbl">Mailing address</p><p>{ADDRESS}</p><p>Online, by appointment only</p><p><a href="{TEL}">Call {PHONE}</a></p><p><a href="{SMS}">Text {PHONE}</a></p><p><a href="mailto:{EMAIL_EDU}">{EMAIL_EDU}</a></p><p><a href="mailto:{EMAIL_ACU}">{EMAIL_ACU}</a></p></div>
   </div>
   <div class="wrap copy"><span>© 2026 The Rebuild Path LLC and The Rebuild Path Acupuncture LLC</span><span>Flagstaff, Arizona</span></div>
 </footer>
@@ -147,6 +179,36 @@ def page(file, title, desc, body, schema=False):
     (OUT / file).write_text(html)
 
 
+EDU_ART = """<svg viewBox="0 0 600 400" role="img" aria-label="Illustration of a heart with a heartbeat line, a book and a leaf">
+  <defs><linearGradient id="eg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F4E9D2"/><stop offset="1" stop-color="#FBF5E9"/></linearGradient></defs>
+  <rect width="600" height="400" fill="url(#eg)"/>
+  <circle cx="300" cy="200" r="150" fill="none" stroke="#E5D6B4" stroke-width="2"/>
+  <circle cx="300" cy="200" r="118" fill="#1F3A2B"/>
+  <path d="M300 268 C 250 236 214 206 214 168 A 42 42 0 0 1 300 150 A 42 42 0 0 1 386 168 C 386 206 350 236 300 268 Z" fill="#A4502A"/>
+  <path d="M150 204 H 236 L 256 170 L 282 236 L 306 150 L 330 222 L 346 204 H 450" fill="none" stroke="#E2BC72" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  <use href="#maple" x="440" y="70" width="70" height="70" fill="#D9893A" transform="rotate(18 475 105)"/>
+  <use href="#leaf" x="96" y="250" width="34" height="68" fill="#5F7A4E" transform="rotate(-40 113 284)"/>
+  <use href="#leaf" x="470" y="262" width="28" height="56" fill="#C8963E" transform="rotate(36 484 290)"/>
+</svg>"""
+
+PEAKS_ART = """<svg viewBox="0 0 600 400" role="img" aria-label="Illustration of mountain peaks, pine trees and a winding path at sunrise">
+  <defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F4E9D2"/><stop offset="1" stop-color="#F7D9A8"/></linearGradient></defs>
+  <rect width="600" height="400" fill="url(#sky)"/>
+  <circle cx="300" cy="190" r="70" fill="#E2BC72" opacity=".75"/>
+  <path d="M0 250 L 110 170 L 170 205 L 260 120 L 330 175 L 380 140 L 470 205 L 540 160 L 600 200 V 400 H 0 Z" fill="#5F7A4E" opacity=".55"/>
+  <path d="M0 290 C 120 250 220 270 300 255 C 400 238 500 250 600 235 V 400 H 0 Z" fill="#2C4F3B"/>
+  <path d="M0 330 C 140 305 260 320 360 300 C 450 284 530 300 600 290 V 400 H 0 Z" fill="#1F3A2B"/>
+  <path d="M300 400 C 360 370 250 345 300 318 C 340 296 290 280 305 262" fill="none" stroke="#C8963E" stroke-width="10" stroke-linecap="round" opacity=".9"/>
+  <g fill="#152A1E">
+    <path d="M70 330 L 92 262 L 114 330 Z"/><path d="M80 300 L 92 250 L 104 300 Z"/>
+    <path d="M120 322 L 138 268 L 156 322 Z"/>
+    <path d="M470 320 L 494 248 L 518 320 Z"/><path d="M482 290 L 494 238 L 506 290 Z"/>
+    <path d="M520 316 L 538 266 L 556 316 Z"/>
+  </g>
+  <use href="#maple" x="40" y="40" width="56" height="56" fill="#A4502A" transform="rotate(-16 68 68)"/>
+  <use href="#leaf" x="520" y="50" width="26" height="52" fill="#D9893A" transform="rotate(30 533 76)"/>
+</svg>"""
+
 # ---------------- Home ----------------
 TRAIL_SVG = """<svg class="line" viewBox="0 0 1000 1200" preserveAspectRatio="none" aria-hidden="true">
   <path d="M500 0 C 500 120, 120 160, 140 330 S 880 470, 860 640 S 120 800, 150 960 S 500 1100, 500 1200" fill="none" stroke="#C8963E" stroke-width="2.5" stroke-dasharray="2 10" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
@@ -156,7 +218,7 @@ page("index.html",
      "The Rebuild Path | Acupressure, CPR and Education in Flagstaff, AZ",
      "The Rebuild Path empowers you to reclaim your own choices in health and lifestyle, with acupressure education, CPR training and community support from Amber Smith, L.Ac., in Flagstaff, Arizona.",
      f"""
-<section class="hero dark">
+<section class="hero dark photo" style="--bg:url(images/01-home-hero-forest-path.webp)">
   {LEAVES}
   <div class="wrap">
     <div>
@@ -178,6 +240,7 @@ page("index.html",
     <p class="eyebrow">Our vision</p>
     <blockquote>Empowering individuals to reclaim their own choices in health and lifestyle.</blockquote>
     <p class="lead narrow" style="margin:0 auto">Too often, people are told what to do about their health without being shown how their own body works. The Rebuild Path starts from the other side: when you understand your body, you can choose what fits your life. Every class, consultation and conversation here is built to put that choice back in your hands.</p>
+    <figure class="wide"><img src="images/02-home-journey-meadow.webp" alt="Open meadow footpath through grasses toward distant mountains" width="1672" height="941" loading="lazy"><figcaption>Become your own wayfinder.</figcaption></figure>
   </div>
 </section>
 
@@ -187,15 +250,15 @@ page("index.html",
     <div class="trail">
       {TRAIL_SVG}
       <div class="stop">
-        <div class="pic contain"><img src="images/acupressure-pc6.jpg" alt="Illustration of the Inner Pass acupressure point on the forearm" width="1400" height="467" loading="lazy"></div>
+        <div class="pic"><img src="images/09-acupuncture-care-ambience.webp" alt="Neutral treatment room with linens and warm natural light" width="1000" height="1250" loading="lazy" style="object-position:center 62%"></div>
         <div class="txt"><span class="marker">1</span><p class="tag">The Rebuild Path Acupuncture</p><h3>Acupuncture and acupressure</h3><p>Learn what acupuncture and acupressure are, and how Traditional Chinese Medicine looks at the whole person, not just the symptom.</p><a class="more" href="acupuncture.html">Explore acupuncture</a></div>
       </div>
       <div class="stop flip">
-        <div class="pic"><img src="images/leaves.jpg" alt="Green leaves and soft shadows on a cream wall" width="1672" height="941" loading="lazy"></div>
+        <div class="pic"><img src="images/07-education-learning-journal.webp" alt="Open blank journal, fountain pen, tea, and botanical shadows" width="1000" height="1250" loading="lazy" style="object-position:center 60%"></div>
         <div class="txt"><span class="marker">2</span><p class="tag">The Rebuild Path Education</p><h3>Education and CPR</h3><p>American Heart Association CPR and first aid taught by a paramedic, plus online one on one consultations and workshops.</p><a class="more" href="education.html">Explore education</a></div>
       </div>
       <div class="stop">
-        <div class="pic contain"><img src="images/acupressure-ear.jpg" alt="Illustration of the ear" width="900" height="900" loading="lazy" style="object-fit:cover"></div>
+        <div class="pic"><img src="images/06-personal-growth-overlook.webp" alt="Person viewed from behind looking over a mountain valley" width="1000" height="1250" loading="lazy" style="object-position:center 35%"></div>
         <div class="txt"><span class="marker">3</span><p class="tag">Community</p><h3>Support along the way</h3><p>Join The Rebuild Path on Skool for guided workbooks, conversation and encouragement from people on the same path.</p><a class="more" href="{SKOOL}">Join on Skool</a></div>
       </div>
     </div>
@@ -204,12 +267,12 @@ page("index.html",
 
 <section class="parch" id="upcoming">
   <div class="wrap">
-    <div class="center" style="margin-bottom:40px"><p class="eyebrow">Upcoming</p><h2>Classes and workshops</h2></div>
+    <div class="center" style="margin-bottom:40px"><p class="eyebrow">Upcoming</p><h2>Classes, workshops and ways to start</h2></div>
     {event_cards("index.html")}
   </div>
 </section>
 
-<section class="community dark">
+<section class="community dark photo" style="--bg:url(images/03-journey-forest-trail.webp)">
   {LEAVES.replace('class="leafs"', 'class="leafs" style="left:auto;right:-30px;top:auto;bottom:-30px"')}
   <div class="wrap">
     <div><p class="eyebrow">Community</p><h2>You don't have to rebuild alone.</h2><p class="lead">The Rebuild Path community on Skool is a place for questions, encouragement and the guided workbooks that go with you between classes.</p></div>
@@ -223,7 +286,7 @@ page("acupuncture.html",
      "The Rebuild Path Acupuncture | Acupuncture and Acupressure | Flagstaff, AZ",
      "What acupuncture and acupressure are, with Amber Smith, L.Ac., licensed acupuncturist in Flagstaff, Arizona. Join the online Acupressure for Seasonal Stress workshop.",
      f"""
-<section class="page-head dark">
+<section class="page-head dark photo" style="--bg:url(images/10-acupuncture-services-ambience.webp)">
   {LEAVES}
   <div class="wrap">
     <p class="eyebrow">The Rebuild Path Acupuncture</p>
@@ -241,14 +304,14 @@ page("acupuncture.html",
       <h2>Fine needles, specific points, time to rest</h2>
       <p>Acupuncture is one of the oldest parts of Traditional Chinese Medicine. Fine, sterile, single use needles, about the width of a hair, are placed at specific points on the body and left in while you rest.</p>
       <p>Most people feel a mild, dull heaviness or a gentle warmth around the needle, then settle in. The points follow a system developed and refined over more than two thousand years, and Traditional Chinese Medicine looks at the whole person, not just the symptom that brought you in.</p>
-      <div class="note">In person acupuncture visits will return when a new treatment space opens. Follow along on <a href="{INSTAGRAM}">Instagram</a> or <a href="{FACEBOOK}">Facebook</a> to hear first.</div>
+      <div class="note">The Rebuild Path is currently online. In person acupuncture visits will return when a new treatment space opens. Follow along on <a href="{INSTAGRAM}">Instagram</a> or <a href="{FACEBOOK}">Facebook</a> to hear first.</div>
     </div>
   </div>
 </section>
 
 <section class="cream">
   <div class="wrap split rev">
-    <div class="media"><img src="images/acupressure-li4.jpg" alt="Illustration of the Joining Valley acupressure point on the hand" width="900" height="779" loading="lazy"></div>
+    <div class="media tall"><img src="images/04-wayfinder-compass-in-hands.webp" alt="Hands holding an antique brass compass against olive fabric" width="1000" height="1250" loading="lazy"></div>
     <div>
       <p class="eyebrow">What is acupressure?</p>
       <h2>The same points, in your own hands</h2>
@@ -258,7 +321,7 @@ page("acupuncture.html",
         <li>Takes a few minutes, at home, at work or before bed</li>
         <li>Pairs well with slow breathing and gentle movement</li>
       </ul>
-      <p>Want personal guidance? Amber offers <a href="education.html#consultations">online one on one consultations</a> through The Rebuild Path Education.</p>
+      <p>Want personal guidance? Amber offers <a href="education.html#consultations">online one on one consultations</a>. Have questions? See the <a href="faq.html#acupuncture">acupuncture FAQ</a>.</p>
     </div>
   </div>
 </section>
@@ -290,7 +353,7 @@ page("education.html",
      "The Rebuild Path Education | CPR Classes and Consultations | Flagstaff, AZ",
      "American Heart Association CPR and first aid classes taught by a paramedic, online acupressure consultations and workshops from The Rebuild Path in Flagstaff, Arizona.",
      f"""
-<section class="page-head dark">
+<section class="page-head dark photo" style="--bg:url(images/08-education-workbook-resources.webp)">
   {LEAVES}
   <div class="wrap">
     <p class="eyebrow">The Rebuild Path Education</p>
@@ -306,8 +369,9 @@ page("education.html",
       <p class="eyebrow">Online consultations</p>
       <h2>One on one: reconnect with your body</h2>
       <p>A private online session on how acupressure, meditation and movement can help you reconnect with your body. You learn points and practices you can use on your own, at your own pace, and leave with a plan that fits your day.</p>
-      <p class="fine">Coaching and education only. No hands on treatment.</p>
-      <div class="actions"><a class="btn" href="{SMS}">Text to schedule</a><a class="btn ghost" href="{TEL}">Call {PHONE}</a></div>
+      <ul class="ticks"><li>45 minutes, online</li><li>Coaching and education only, no hands on treatment</li><li>Start with a free 15 minute discovery call</li></ul>
+      <div class="actions"><a class="btn" href="{DISCOVERY}">Book a free discovery call</a><a class="btn ghost" href="{SMS}">Text to schedule a consultation</a></div>
+      <p class="fine" style="margin-top:14px">Questions? See the <a href="faq.html#education">education FAQ</a>.</p>
     </div>
     <div class="cards" style="grid-template-columns:1fr;margin-top:0">
       <div class="card"><div class="ico">{ICON['hand']}</div><h3>Acupressure</h3><p>Points you can find and press yourself, any time you need them.</p></div>
@@ -339,11 +403,11 @@ page("education.html",
   </div>
 </section>
 
-<section class="community dark">
+<section class="community dark photo" style="--bg:url(images/05-wayfinder-journal-and-compass.webp)">
   {LEAVES.replace('class="leafs"', 'class="leafs" style="left:auto;right:-30px;top:auto;bottom:-30px"')}
   <div class="wrap">
     <div><p class="eyebrow">Community support</p><h2>Keep learning between classes.</h2><p class="lead">Guided workbooks, questions and encouragement live in The Rebuild Path community on Skool.</p></div>
-    <div class="actions" style="justify-content:flex-start"><a class="btn gold arrow" href="{SKOOL}">Join on Skool</a></div>
+    <div class="actions" style="justify-content:flex-start"><a class="btn gold arrow" href="{SKOOL}">Join on Skool</a><a class="btn ghost" href="{SKOOL_CLASSROOM}">Open the classroom</a></div>
   </div>
 </section>
 """)
@@ -353,7 +417,7 @@ page("about.html",
      "Meet Amber Smith, L.Ac. | Founder of The Rebuild Path, Flagstaff, AZ",
      "Amber Smith, L.Ac., founder of The Rebuild Path, is a licensed acupuncturist, paramedic and CPR instructor in Flagstaff, Arizona.",
      f"""
-<section class="page-head dark">
+<section class="page-head dark photo" style="--bg:url(images/02-home-journey-meadow.webp)">
   {LEAVES}
   <div class="wrap"><p class="eyebrow">About</p><h1>Meet Amber</h1><p class="lead">Founder of The Rebuild Path.</p></div>
 </section>
@@ -373,14 +437,108 @@ page("about.html",
       <p>That question has taken me from emergency care as a paramedic to teaching CPR, practicing acupuncture, and creating guided workbooks for personal reflection. My training in molecular and cellular biology and my years in emergency medicine shape the curiosity and attention I bring to everything I teach.</p>
       <p>I enjoy making complicated things understandable. That starts with listening to what you're experiencing, how it affects your day, and what you'd like to be able to do or feel differently.</p>
       <p>What I love most is building a relationship over time: learning what matters to you, noticing changes together, and adjusting along the way. My goal is to help you understand your body and feel confident taking an active role in your own well being.</p>
-      <div class="actions"><a class="btn" href="education.html#consultations">Book a consultation</a><a class="btn ghost" href="{SKOOL}">Join the community</a></div>
+      <div class="actions"><a class="btn" href="{DISCOVERY}">Book a free discovery call</a><a class="btn ghost" href="{SKOOL}">Join the community</a></div>
     </div>
   </div>
 </section>
 """)
 
+# ---------------- FAQ ----------------
+FAQ_ACU = [
+    ("What is acupuncture?", "Acupuncture is one of the oldest parts of Traditional Chinese Medicine. Fine, sterile, single use needles are placed at specific points on the body and left in while you rest."),
+    ("Does acupuncture hurt?", "The needles are solid and about the width of a hair. Most people feel a mild, dull heaviness or a gentle warmth around the needle, then settle in. Speak up any time something feels uncomfortable and it will be adjusted."),
+    ("Are the needles reused?", "No. Every needle is sterile, used once, and then disposed of safely."),
+    ("What is the difference between acupuncture and acupressure?", "They use the same points. Acupuncture uses fine needles placed by a licensed acupuncturist. Acupressure uses steady, comfortable pressure from your fingertips, so you can do it yourself, almost anywhere."),
+    ("Can I use acupressure during pregnancy?", "Some points are traditionally avoided during pregnancy, such as Joining Valley (LI 4) on the hand. If you are pregnant, let Amber know so she can suggest alternative points."),
+    ("Can I book an in person acupuncture visit?", "The Rebuild Path is online right now. In person acupuncture visits will return when a new treatment space opens. In the meantime, online workshops and consultations teach acupressure you can use at home."),
+    ("Does acupuncture replace my doctor?", "No. Acupuncture and acupressure work alongside the care you already receive. Keep seeing your doctor and other providers."),
+    ("Who is the acupuncturist?", "Amber Smith, L.Ac., a licensed acupuncturist in Arizona and an NCBAHM Certified Diplomate in Acupuncture, with a Master of Acupuncture and years of experience as a paramedic."),
+]
+FAQ_EDU = [
+    ("What happens in a one on one consultation?", "A 45 minute online session on how acupressure, meditation and movement can help you reconnect with your body. You learn points and practices you can use on your own. It is coaching and education only, with no hands on treatment."),
+    ("How do I get started?", f'Book a <a href="{DISCOVERY}">free 15 minute discovery call</a>. You talk through what you are working on, and together you decide whether a consultation, a workshop or the community is the right next step.'),
+    ("Where do consultations and workshops happen?", "Online, by video call. Your link is sent to you before your session or workshop."),
+    ("How do I join an online workshop?", "Reserve your spot with the payment link on the workshop card. Your class link and joining instructions are emailed to you before the workshop."),
+    ("What is a hybrid CPR class?", "You complete the American Heart Association online course first, then attend an in person skills session with Amber. The online course is purchased directly from the American Heart Association."),
+    ("Which CPR class do I need?", "BLS Provider is for healthcare workers and students. Heartsaver courses are for workplaces, coaches, caregivers and the community. If your job requires a certification, ask your employer which course they accept."),
+    ("Can you teach a class for our group?", f'Yes. Classes can come to your workplace, team or group. Call or text <a href="{TEL}">{PHONE}</a> to plan a date.'),
+    ("How long is a CPR certification good for?", "American Heart Association course completion cards are valid for two years."),
+    ("What is The Rebuild Path community?", f'An online community on Skool with guided workbooks, the Goals workshop in the <a href="{SKOOL_CLASSROOM}">classroom</a>, and conversation and support between classes.'),
+]
+def faq_list(items):
+    return "".join(f'<details class="qa"><summary>{q}</summary><div class="ans"><p>{a}</p></div></details>' for q, a in items)
+
+page("faq.html",
+     "Frequently Asked Questions | Acupuncture and Education | The Rebuild Path",
+     "Answers to common questions about acupuncture, acupressure, online consultations, workshops and CPR classes with The Rebuild Path in Flagstaff, Arizona.",
+     f"""
+<section class="page-head dark photo" style="--bg:url(images/03-journey-forest-trail.webp)">
+  {LEAVES}
+  <div class="wrap"><p class="eyebrow">FAQ</p><h1>Questions and answers</h1><p class="lead">Everything in one place, for acupuncture and for education.</p></div>
+</section>
+<div class="rule"></div>
+<div class="faq-tabs"><div class="wrap"><a href="#acupuncture">Acupuncture</a><a href="#education">Education</a></div></div>
+<section id="acupuncture" class="faq-sec">
+  <div class="wrap narrow">
+    <p class="eyebrow">The Rebuild Path Acupuncture</p><h2>Acupuncture and acupressure</h2>
+    {faq_list(FAQ_ACU)}
+  </div>
+</section>
+<section id="education" class="faq-sec cream">
+  <div class="wrap narrow">
+    <p class="eyebrow">The Rebuild Path Education</p><h2>Consultations, workshops and CPR</h2>
+    {faq_list(FAQ_EDU)}
+    <p class="center" style="margin-top:36px">Still have a question? <a href="contact.html">Send a message</a> or <a href="{DISCOVERY}">book a free discovery call</a>.</p>
+  </div>
+</section>
+""")
+
+# ---------------- Contact ----------------
+page("contact.html",
+     "Contact The Rebuild Path | Flagstaff, AZ",
+     "Send The Rebuild Path a general inquiry, book a free 15 minute discovery call, or call or text (928) 316 6511.",
+     f"""
+<section class="page-head dark photo" style="--bg:url(images/05-wayfinder-journal-and-compass.webp)">
+  {LEAVES}
+  <div class="wrap"><p class="eyebrow">Contact</p><h1>Send a message</h1><p class="lead">Questions about classes, consultations or the community? Reach out and Amber will get back to you.</p></div>
+</section>
+<div class="rule"></div>
+<section>
+  <div class="wrap contact-grid">
+    <form class="form" action="https://formsubmit.co/{EMAIL_EDU}" method="POST">
+      <input type="hidden" name="_subject" value="New inquiry from The Rebuild Path website">
+      <input type="hidden" name="_next" value="{SITE}/thanks.html">
+      <input type="hidden" name="_template" value="table">
+      <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <label>Name<input type="text" name="name" required autocomplete="name"></label>
+      <label>Email<input type="email" name="email" required autocomplete="email"></label>
+      <label>Your inquiry<textarea name="message" rows="7" required></textarea></label>
+      <p class="fine">Please do not include health information in this form.</p>
+      <button class="btn" type="submit">Send message</button>
+    </form>
+    <aside class="contact-side">
+      <div class="card"><h3>Free discovery call</h3><p>A short, no pressure call to talk through where you are and what you are looking for.</p><p style="margin-top:14px"><a class="btn gold small" href="{DISCOVERY}">Book a discovery call</a></p></div>
+      <div class="card"><h3>Call or text</h3><p><a href="{TEL}">{PHONE}</a></p><p class="fine" style="margin-top:8px">Online, by appointment only.</p></div>
+      <div class="card"><h3>Email</h3><p>General and education: <a href="mailto:{EMAIL_EDU}">{EMAIL_EDU}</a></p><p>Acupuncture: <a href="mailto:{EMAIL_ACU}">{EMAIL_ACU}</a></p></div>
+      <div class="card"><h3>Mailing address</h3><p>{ADDRESS}</p></div>
+    </aside>
+  </div>
+</section>
+""")
+
+page("thanks.html",
+     "Thank You | The Rebuild Path",
+     "Thank you for reaching out to The Rebuild Path.",
+     f"""
+<section class="page-head dark photo" style="--bg:url(images/02-home-journey-meadow.webp)">
+  {LEAVES}
+  <div class="wrap"><p class="eyebrow">Message sent</p><h1>Thank you for reaching out.</h1><p class="lead">Your message is on its way. Amber will reply by email.</p>
+  <div class="actions"><a class="btn gold" href="index.html">Back to home</a><a class="btn ghost" href="{SKOOL}">Join the community</a></div></div>
+</section>
+""")
+
 # Old addresses forward to the new pages
-for old, new in [("treatment.html", "acupuncture.html"), ("visits.html", "education.html"), ("contact.html", "index.html")]:
+for old, new in [("treatment.html", "acupuncture.html"), ("visits.html", "education.html")]:
     (OUT / old).write_text(f'<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="robots" content="noindex"><link rel="canonical" href="{new}"><meta http-equiv="refresh" content="0; url={new}"><title>The Rebuild Path</title></head><body><p><a href="{new}">Continue to The Rebuild Path</a></p></body></html>\n')
 
 print("built")
