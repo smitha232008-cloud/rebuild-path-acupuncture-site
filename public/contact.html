@@ -41,7 +41,7 @@
 <div class="rule"></div>
 <section>
   <div class="wrap contact-grid">
-    <form class="form" action="https://formsubmit.co/therebuildpath@gmail.com" method="POST">
+    <form class="form" id="inquiry" action="https://formsubmit.co/therebuildpath@gmail.com" method="POST" data-ajax="https://formsubmit.co/ajax/therebuildpath@gmail.com">
       <input type="hidden" name="_subject" value="New inquiry from The Rebuild Path website">
       <input type="hidden" name="_next" value="https://therebuildpath.org/thanks">
       <input type="hidden" name="_template" value="table">
@@ -51,7 +51,12 @@
       <label>Your inquiry<textarea name="message" rows="7" required></textarea></label>
       <p class="fine">Please do not include health information in this form.</p>
       <button class="btn" type="submit">Send message</button>
+      <p class="form-status" role="status" aria-live="polite" hidden></p>
     </form>
+    <div class="form-done" id="inquiry-done" hidden tabindex="-1">
+      <h2>Thank you, your message was sent.</h2>
+      <p>Amber will reply by email. If it is urgent, call or text <a href="tel:+19283166511">(928) 316 6511</a>.</p>
+    </div>
     <aside class="contact-side">
       <div class="card"><h3>Free discovery call</h3><p>A short, no pressure call to talk through where you are and what you are looking for.</p><p style="margin-top:14px"><a class="btn gold small" href="https://calendly.com/ambersmith2008/discovery">Book a discovery call</a></p></div>
       <div class="card"><h3>Call or text</h3><p><a href="tel:+19283166511">(928) 316 6511</a></p><p class="fine" style="margin-top:8px">Online, by appointment only.</p></div>
@@ -60,6 +65,31 @@
     </aside>
   </div>
 </section>
+<script>
+(function(){
+  var f=document.getElementById('inquiry'); if(!f||!window.fetch) return;
+  var st=f.querySelector('.form-status'), btn=f.querySelector('button[type=submit]'), done=document.getElementById('inquiry-done');
+  f.addEventListener('submit',function(e){
+    e.preventDefault();
+    if(f._honey&&f._honey.value) return;
+    btn.disabled=true; btn.textContent='Sending, one moment';
+    st.hidden=false; st.className='form-status'; st.textContent='Sending your message. This can take up to 30 seconds.';
+    var data={}; new FormData(f).forEach(function(v,k){data[k]=v;});
+    var ctl=window.AbortController?new AbortController():null; var t=setTimeout(function(){if(ctl)ctl.abort();},45000);
+    fetch(f.getAttribute('data-ajax'),{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(data),signal:ctl?ctl.signal:undefined})
+      .then(function(r){return r.json().catch(function(){return {};}).then(function(j){return {ok:r.ok,j:j};});})
+      .then(function(res){
+        clearTimeout(t);
+        if(res.ok&&String(res.j.success)!=='false'){f.hidden=true; done.hidden=false; done.focus();}
+        else{throw new Error(res.j.message||'not sent');}
+      })
+      .catch(function(){
+        clearTimeout(t); btn.disabled=false; btn.textContent='Send message';
+        st.className='form-status error'; st.innerHTML='Sorry, your message did not go through. Please try again, or email <a href="mailto:therebuildpath@gmail.com">therebuildpath@gmail.com</a> or text <a href="sms:+19283166511">(928) 316 6511</a>.';
+      });
+  });
+})();
+</script>
 
 </main>
 <div class="rule"></div>
