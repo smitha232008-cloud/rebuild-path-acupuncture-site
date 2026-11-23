@@ -303,3 +303,10 @@ a.plain:hover{color:var(--rust)}
 a.stretch::after{content:"";position:absolute;inset:0;z-index:1;border-radius:var(--radius)}
 .event.ongoing .thumb,.event.ongoing .btn{position:relative;z-index:2}
 .event.ongoing:has(a.stretch):hover{box-shadow:0 14px 34px rgba(21,42,30,.14);cursor:pointer}
+.goals-media{aspect-ratio:1/1;max-width:520px;justify-self:center}
+.goals-media img{width:100%;height:100%;object-fit:cover}
+.howto-title{font-size:24px;margin:22px 0 10px}
+ol.howto-steps{list-style:none;counter-reset:step;padding:0;margin:0 0 6px}
+ol.howto-steps li{counter-increment:step;position:relative;padding:4px 0 12px 46px;font-size:16.5px}
+ol.howto-steps li::before{content:counter(step);position:absolute;left:0;top:0;width:32px;height:32px;border-radius:50%;background:var(--forest);color:var(--gold-light);font-family:var(--display);font-weight:700;font-size:18px;display:flex;align-items:center;justify-content:center;font-variant-numeric:lining-nums}
+ol.howto-steps b{color:var(--forest)}

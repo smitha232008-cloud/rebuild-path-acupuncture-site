@@ -56,9 +56,12 @@ ONGOING = [
     dict(
         title="Goals Workshop",
         kind="In the Skool classroom",
-        text="Work through the Goals workshop at your own pace in The Rebuild Path classroom on Skool, with the community there for support.",
-        link=SKOOL_CLASSROOM,
-        cta="Open the classroom",
+        text="A self paced workshop inside The Rebuild Path community on Skool, with the community there for support. See how to join and find the course.",
+        link="education.html#goals",
+        cta="How to join",
+        image="images/goals-compass-journal.webp",
+        image_pos="center 60%",
+        when="Self paced",
         pages=["index.html", "education.html"],
     ),
     dict(
@@ -67,6 +70,9 @@ ONGOING = [
         text="Not sure where to start? Book a short, no pressure call with Amber to talk through what you are working on and which next step fits.",
         link=DISCOVERY,
         cta="Book a discovery call",
+        image="images/amber-smith-acupuncturist.jpg",
+        image_pos="center 20%",
+        when="Free",
         pages=["index.html", "education.html"],
     ),
 ]
@@ -114,7 +120,7 @@ def event_cards(file):
 </article>""")
     def ongoing_media(o):
         if o.get("image"):
-            return f'<a class="thumb" href="{o["link"]}" aria-label="{o["title"]}"><img src="{o["image"]}" alt="" loading="lazy"><span>{o.get("when", "Soon")}</span></a>'
+            return f'<a class="thumb" href="{o["link"]}" aria-label="{o["title"]}"><img src="{o["image"]}" alt="" loading="lazy" style="object-position:{o.get("image_pos", "center 18%")}"><span>{o.get("when", "Soon")}</span></a>'
         icon = dict(leaf=LEAFICON, goal=GOAL, call=CALL)[o.get('icon') or ('goal' if o['link'] == SKOOL_CLASSROOM else 'call')]
         return f'<div class="date"><small>{o.get("when", "Anytime")}</small><b>{icon}</b><span>{o["kind"]}</span></div>'
     ongoing = "".join(f"""<article class="event ongoing">
@@ -432,6 +438,25 @@ page("education.html",
   <div class="wrap">
     <div class="center" style="margin-bottom:40px"><p class="eyebrow">Upcoming</p><h2>Classes and educational opportunities</h2></div>
     {event_cards("education.html")}
+  </div>
+</section>
+
+<section id="goals">
+  <div class="wrap split">
+    <div class="media goals-media"><img src="images/goals-compass-journal.webp" alt="A compass and a leather journal with a tree on the cover, on a rock overlooking a valley at sunrise" width="700" height="700" loading="lazy"></div>
+    <div>
+      <p class="eyebrow">In the Skool classroom</p>
+      <h2>The Goals Workshop</h2>
+      <p>The Goals Workshop is a self paced course inside The Rebuild Path community on Skool. Work through it on your own schedule, with the community there to support you along the way.</p>
+      <h3 class="howto-title">How to get to the course</h3>
+      <ol class="howto-steps">
+        <li><b>Join the community.</b> Sign up for The Rebuild Path community on Skool.</li>
+        <li><b>Open the Classroom.</b> Once you are granted access, click the Classroom tab.</li>
+        <li><b>Start the Goals Workshop.</b> Choose the Goals Workshop course.</li>
+      </ol>
+      <div class="note">The Goals Workshop has its own cost, paid directly through the Skool platform.</div>
+      <div class="actions"><a class="btn" href="{SKOOL}">Join the community</a><a class="btn ghost" href="{SKOOL_CLASSROOM}">Open the classroom</a></div>
+    </div>
   </div>
 </section>
 
