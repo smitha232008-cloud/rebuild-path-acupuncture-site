@@ -47,10 +47,10 @@ ONGOING = [
         title="What Is Your Body Trying to Tell You?",
         kind="Coming soon",
         text="A two part educational series on how Traditional Chinese Medicine connects the physical, mental and emotional. Join the interest list to hear first.",
-        link="your-body.html#register",
-        cta="Join the interest list",
-        icon="leaf",
-        when="Soon",
+        link="your-body.html",
+        cta="See the series",
+        image="images/series-meditation.webp",
+        when="Coming soon",
         pages=["index.html", "education.html"],
     ),
     dict(
@@ -112,9 +112,14 @@ def event_cards(file):
   <div><p class="tag">{e['kind']}</p><h3>{e['title']}</h3><div class="meta">{meta}</div><p>{e['text']}</p></div>
   <div><div class="price">{e['price']}</div><a class="btn" href="{e['link']}">{e['cta']}</a></div>
 </article>""")
+    def ongoing_media(o):
+        if o.get("image"):
+            return f'<a class="thumb" href="{o["link"]}" aria-label="{o["title"]}"><img src="{o["image"]}" alt="" loading="lazy"><span>{o.get("when", "Soon")}</span></a>'
+        icon = dict(leaf=LEAFICON, goal=GOAL, call=CALL)[o.get('icon') or ('goal' if o['link'] == SKOOL_CLASSROOM else 'call')]
+        return f'<div class="date"><small>{o.get("when", "Anytime")}</small><b>{icon}</b><span>{o["kind"]}</span></div>'
     ongoing = "".join(f"""<article class="event ongoing">
-  <div class="date"><small>{o.get('when', 'Anytime')}</small><b>{dict(leaf=LEAFICON, goal=GOAL, call=CALL)[o.get('icon') or ('goal' if o['link'] == SKOOL_CLASSROOM else 'call')]}</b><span>{o['kind']}</span></div>
-  <div><p class="tag">{o['kind']}</p><h3>{o['title']}</h3><p>{o['text']}</p></div>
+  {ongoing_media(o)}
+  <div><p class="tag">{o['kind']}</p><h3>{f'<a class="plain" href="{o["link"]}">{o["title"]}</a>' if o.get("image") else o['title']}</h3><p>{o['text']}</p></div>
   <div><a class="btn ghost" href="{o['link']}">{o['cta']}</a></div>
 </article>""" for o in ONGOING if file in o["pages"])
     return f"""<div class="events" data-events>{''.join(out)}
