@@ -576,18 +576,12 @@ def infl_prelaunch():
   <h2>A two part educational experience</h2>
   <p class="lead">More information and registration details will be available shortly.</p>
   <div class="interest">
-    <form class="form" id="interest" action="https://formsubmit.co/{EMAIL_EDU}" method="POST">
+    <div class="form" id="interest">
       <h3>Interested?</h3>
-      <p>Add your contact details, and I will email you directly when the class is ready.</p>
-      <input type="hidden" name="_subject" value="Interest list: What Is Your Body Trying to Tell You?">
-      <input type="hidden" name="_next" value="{SITE}/list-thanks">
-      <input type="hidden" name="_template" value="table">
-      <input type="hidden" name="list" value="What Is Your Body Trying to Tell You? interest list">
-      <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
-      <label>Name<input type="text" name="name" required autocomplete="name"></label>
-      <label>Email<input type="email" name="email" required autocomplete="email"></label>
-      <button class="btn" type="submit">Add me to the list</button>
-    </form>
+      <p>Email me and I will add you to the list, then email you directly when the class is ready.</p>
+      <div class="actions" style="margin-top:16px"><a class="btn" href="mailto:{EMAIL_EDU}?subject=Interest%20list%3A%20What%20Is%20Your%20Body%20Trying%20to%20Tell%20You%3F&amp;body=Please%20add%20me%20to%20the%20interest%20list.%0A%0AName%3A%20">Email me to join the list</a></div>
+      <p class="fine" style="margin-top:14px">Prefer to text? Send "interest list" and your name to <a href="{SMS}">{PHONE}</a>.</p>
+    </div>
   </div>
   <p style="margin-top:28px">You can also follow along on <a href="{INSTAGRAM}">Instagram</a> or <a href="{FACEBOOK}">Facebook</a>, or join <a href="{SKOOL}">The Rebuild Path community on Skool</a>.</p>
   <p class="fine" style="margin-top:12px">For education purposes only.</p>
