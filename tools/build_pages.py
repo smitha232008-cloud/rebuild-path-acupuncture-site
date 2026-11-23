@@ -456,16 +456,15 @@ page("about.html",
 """)
 
 # ---------------- Two part series page (framework) ----------------
-# Nov 23, 2026: Amber is moving away from the word inflammation. The new topic is how Traditional
-# Chinese Medicine understands the disease process and how the fundamentals help. The wording below
-# is the old inflammation draft and must be replaced before this page is ever built for the live site.
+# Nov 23, 2026 (Amber): no use of the word inflammation. Title: What Is Your Body Trying to Tell You?
+# Topic: how Traditional Chinese Medicine understands the disease process and how its fundamentals help.
 # Stage "prelaunch": sneak peek only, no dates, prices or payment buttons.
 # Stage "registration": full descriptions, prices and Square buttons. Switch only when every
 # field in INFLAMMATION_PARTS is filled in and Amber approves.
 # The page is built only with INFLAMMATION_LIVE=1 until Amber approves it (Nov 23, 2026).
-INFLAMMATION_LIVE = os.environ.get("INFLAMMATION_LIVE") == "1"
-INFLAMMATION_STAGE = os.environ.get("INFLAMMATION_STAGE", "prelaunch")
-INFLAMMATION_IMAGE = "images/inflammation-meditation.webp"  # Amber's promo image; not supplied yet
+INFLAMMATION_LIVE = os.environ.get("SERIES_LIVE") == "1"
+INFLAMMATION_STAGE = os.environ.get("SERIES_STAGE", "prelaunch")
+INFLAMMATION_IMAGE = "images/series-meditation.webp"  # Amber's promo image of a meditating woman; not supplied yet
 INFLAMMATION_PARTS = [
     dict(part="Part 1", title=None, date=None, time=None, length=None, price=None, link=None, text=None),
     dict(part="Part 2", title=None, date=None, time=None, length=None, price=None, link=None, text=None),
@@ -486,7 +485,7 @@ INFL_ICON = {
 
 def infl_hero_media():
     if (OUT / INFLAMMATION_IMAGE).exists():
-        return f'<div class="infl-photo"><img src="{INFLAMMATION_IMAGE}" alt="A woman meditating, with subtle signs of inflammation shown around her" loading="eager"></div>'
+        return f'<div class="infl-photo"><img src="{INFLAMMATION_IMAGE}" alt="A woman meditating" loading="eager"></div>'
     # Until Amber's image arrives: a quiet decorative panel, never a stand in photo.
     return """<div class="infl-photo art" aria-hidden="true"><svg viewBox="0 0 400 500">
   <defs><radialGradient id="ig" cx="50%" cy="42%" r="55%"><stop offset="0" stop-color="#D9893A" stop-opacity=".55"/><stop offset=".45" stop-color="#C8963E" stop-opacity=".18"/><stop offset="1" stop-color="#1F3A2B" stop-opacity="0"/></radialGradient></defs>
@@ -504,7 +503,7 @@ def infl_registration():
     parts = INFLAMMATION_PARTS
     missing = [p["part"] for p in parts if not all(p[k] for k in ("title", "date", "time", "length", "price", "link", "text"))]
     if missing:
-        raise SystemExit("Inflammation registration stage needs every field filled for: " + ", ".join(missing))
+        raise SystemExit("Series registration stage needs every field filled for: " + ", ".join(missing))
     cards = "".join(f"""<article class="infl-part"><p class="tag">{p['part']}</p><h3>{p['title']}</h3>
   <div class="meta"><span>{p['date']}</span><span>{p['time']}</span><span>{p['length']}</span><span>Live online</span></div>
   <p>{p['text']}</p><div class="infl-buy"><span class="price">{p['price']}</span><a class="btn" href="{p['link']}">Register for {p['part']}</a></div></article>""" for p in parts)
@@ -525,16 +524,16 @@ def infl_prelaunch():
 
 if INFLAMMATION_LIVE:
     themes = "".join(f"""<article class="infl-theme {key}"><div class="ico">{INFL_ICON[key]}</div><h3>{name}</h3><p>{intro}</p><ul class="ticks">{''.join(f'<li>{i}</li>' for i in items)}</ul></article>""" for name, intro, key, items in INFL_THEMES)
-    page("inflammation.html",
-         "Inflammation Through Traditional Chinese Medicine | A Two Part Series | The Rebuild Path",
-         "An upcoming two part educational series from The Rebuild Path on inflammation and the physical, mental and emotional connections seen through Traditional Chinese Medicine.",
+    page("your-body.html",
+         "What Is Your Body Trying to Tell You? | A Two Part Series | The Rebuild Path",
+         "An upcoming two part educational series from The Rebuild Path on how Traditional Chinese Medicine understands the physical, mental and emotional connections in the body, and how its fundamentals can help you.",
          f"""
 <section class="infl-hero dark">
   {LEAVES}
   <div class="wrap">
     <div>
       <p class="eyebrow">Become Your Own Wayfinder</p>
-      <h1>Inflammation: What Is Your Body Trying to Tell You?</h1>
+      <h1>What Is Your Body Trying to Tell You?</h1>
       <p class="lead">Understanding the physical, mental and emotional connections through Traditional Chinese Medicine.</p>
       <p class="infl-flag">Coming soon: a two part educational series</p>
     </div>
@@ -545,10 +544,10 @@ if INFLAMMATION_LIVE:
 
 <section class="cream">
   <div class="wrap narrow infl-intro">
-    <p class="lead">When we think about inflammation, we often picture redness, swelling and pain.</p>
+    <p class="lead">When something feels off, we often focus on the symptom in front of us: the pain, the tension, the restless night.</p>
     <p class="infl-q">But what about the symptoms that aren't as visible?</p>
     <p>Digestive disturbances, difficulty sleeping, mental fog, muscle tension and emotional changes can sometimes accompany ongoing physical discomfort or illness.</p>
-    <p>Traditional Chinese Medicine offers a unique framework for understanding patterns throughout the body rather than examining symptoms in isolation.</p>
+    <p>Traditional Chinese Medicine offers a unique framework for understanding how these patterns develop throughout the body, rather than examining symptoms in isolation. Its fundamentals give you a way to read what your body is telling you.</p>
     <p>Join The Rebuild Path for an upcoming two part educational series exploring these connections and learning practical ways to support your well being.</p>
   </div>
 </section>
