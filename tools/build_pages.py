@@ -154,6 +154,9 @@ SCRIPT = """<script>
         .catch(function(){clearTimeout(t); btn.disabled=false; btn.textContent=label; st.hidden=true; if(er) er.hidden=false;});
     });
   });
+  window.addEventListener('load',function(){
+    if(location.hash.length>1){var el=document.getElementById(location.hash.slice(1)); if(el){setTimeout(function(){el.scrollIntoView({block:'start'});},60);}}
+  });
   var b=document.querySelector('.menu-btn'), n=document.querySelector('nav.main');
   if(b&&n){b.addEventListener('click',function(){var o=n.classList.toggle('open');b.setAttribute('aria-expanded',o);});}
 })();
@@ -577,6 +580,7 @@ if INFLAMMATION_LIVE:
       <h1>What Is Your Body Trying to Tell You?</h1>
       <p class="lead">Understanding the physical, mental and emotional connections through Traditional Chinese Medicine.</p>
       <p class="infl-flag">Coming soon: a two part educational series</p>
+      <div class="actions"><a class="btn gold arrow" href="#register">Join the interest list</a></div>
     </div>
     {infl_hero_media()}
   </div>

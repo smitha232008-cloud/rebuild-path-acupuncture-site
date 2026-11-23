@@ -42,6 +42,7 @@
       <h1>What Is Your Body Trying to Tell You?</h1>
       <p class="lead">Understanding the physical, mental and emotional connections through Traditional Chinese Medicine.</p>
       <p class="infl-flag">Coming soon: a two part educational series</p>
+      <div class="actions"><a class="btn gold arrow" href="#register">Join the interest list</a></div>
     </div>
     <div class="infl-photo"><img src="images/series-meditation.webp" alt="A woman sitting in a forest with one hand on her chest and one on her belly, listening to her body" loading="eager" style="object-position:center 18%"></div>
   </div>
@@ -127,6 +128,9 @@
         .then(function(res){clearTimeout(t); if(res.ok&&String(res.j.success)!=='false'){f.hidden=true; if(done){done.hidden=false; done.focus();}} else {throw new Error('not sent');}})
         .catch(function(){clearTimeout(t); btn.disabled=false; btn.textContent=label; st.hidden=true; if(er) er.hidden=false;});
     });
+  });
+  window.addEventListener('load',function(){
+    if(location.hash.length>1){var el=document.getElementById(location.hash.slice(1)); if(el){setTimeout(function(){el.scrollIntoView({block:'start'});},60);}}
   });
   var b=document.querySelector('.menu-btn'), n=document.querySelector('nav.main');
   if(b&&n){b.addEventListener('click',function(){var o=n.classList.toggle('open');b.setAttribute('aria-expanded',o);});}
