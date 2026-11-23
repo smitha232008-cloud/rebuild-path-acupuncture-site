@@ -485,7 +485,7 @@ INFL_ICON = {
 
 def infl_hero_media():
     if (OUT / INFLAMMATION_IMAGE).exists():
-        return f'<div class="infl-photo"><img src="{INFLAMMATION_IMAGE}" alt="A woman meditating" loading="eager"></div>'
+        return f'<div class="infl-photo"><img src="{INFLAMMATION_IMAGE}" alt="A woman sitting in a forest with one hand on her chest and one on her belly, listening to her body" loading="eager" style="object-position:center 18%"></div>'
     # Until Amber's image arrives: a quiet decorative panel, never a stand in photo.
     return """<div class="infl-photo art" aria-hidden="true"><svg viewBox="0 0 400 500">
   <defs><radialGradient id="ig" cx="50%" cy="42%" r="55%"><stop offset="0" stop-color="#D9893A" stop-opacity=".55"/><stop offset=".45" stop-color="#C8963E" stop-opacity=".18"/><stop offset="1" stop-color="#1F3A2B" stop-opacity="0"/></radialGradient></defs>
