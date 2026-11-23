@@ -455,6 +455,114 @@ page("about.html",
 </section>
 """)
 
+# ---------------- Two part series page (framework) ----------------
+# Nov 23, 2026: Amber is moving away from the word inflammation. The new topic is how Traditional
+# Chinese Medicine understands the disease process and how the fundamentals help. The wording below
+# is the old inflammation draft and must be replaced before this page is ever built for the live site.
+# Stage "prelaunch": sneak peek only, no dates, prices or payment buttons.
+# Stage "registration": full descriptions, prices and Square buttons. Switch only when every
+# field in INFLAMMATION_PARTS is filled in and Amber approves.
+# The page is built only with INFLAMMATION_LIVE=1 until Amber approves it (Nov 23, 2026).
+INFLAMMATION_LIVE = os.environ.get("INFLAMMATION_LIVE") == "1"
+INFLAMMATION_STAGE = os.environ.get("INFLAMMATION_STAGE", "prelaunch")
+INFLAMMATION_IMAGE = "images/inflammation-meditation.webp"  # Amber's promo image; not supplied yet
+INFLAMMATION_PARTS = [
+    dict(part="Part 1", title=None, date=None, time=None, length=None, price=None, link=None, text=None),
+    dict(part="Part 2", title=None, date=None, time=None, length=None, price=None, link=None, text=None),
+]
+INFL_THEMES = [
+    ("Physical health", "Explore how Traditional Chinese Medicine interprets patterns involving:", "body",
+     ["Internal Heat and Cold", "Qi stagnation", "Blood stasis", "Dampness and fluid metabolism", "Digestive discomfort", "Pain, tension and swelling"]),
+    ("Mental well being", "Explore traditional connections between internal imbalances and:", "mind",
+     ["Mental fatigue", "Difficulty concentrating", "Restlessness", "Sleep disturbances", "Repetitive thinking", "Mental clarity"]),
+    ("Emotional well being", "Explore how Traditional Chinese Medicine traditionally understands the relationship between Qi movement and:", "heart",
+     ["Anger and frustration", "Emotional tension", "Anxiety and restlessness"]),
+]
+INFL_ICON = {
+    "body": '<svg viewBox="0 0 24 24" fill="none" stroke="#2C4F3B" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="4.5" r="2"/><path d="M12 7v7M8 10l4-1.5 4 1.5M9.5 21l2.5-7 2.5 7"/></svg>',
+    "mind": '<svg viewBox="0 0 24 24" fill="none" stroke="#2C4F3B" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 20v-3a6 6 0 1 1 6 0v3"/><path d="M9.5 9.5a2.5 2.5 0 0 1 5 0c0 1.5-2.5 2-2.5 3.5M12 15.5v.01"/></svg>',
+    "heart": '<svg viewBox="0 0 24 24" fill="none" stroke="#2C4F3B" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7.5-4.6-7.5-10A4.3 4.3 0 0 1 12 7.4 4.3 4.3 0 0 1 19.5 10c0 5.4-7.5 10-7.5 10z"/></svg>',
+}
+
+def infl_hero_media():
+    if (OUT / INFLAMMATION_IMAGE).exists():
+        return f'<div class="infl-photo"><img src="{INFLAMMATION_IMAGE}" alt="A woman meditating, with subtle signs of inflammation shown around her" loading="eager"></div>'
+    # Until Amber's image arrives: a quiet decorative panel, never a stand in photo.
+    return """<div class="infl-photo art" aria-hidden="true"><svg viewBox="0 0 400 500">
+  <defs><radialGradient id="ig" cx="50%" cy="42%" r="55%"><stop offset="0" stop-color="#D9893A" stop-opacity=".55"/><stop offset=".45" stop-color="#C8963E" stop-opacity=".18"/><stop offset="1" stop-color="#1F3A2B" stop-opacity="0"/></radialGradient></defs>
+  <rect width="400" height="500" fill="#1F3A2B"/>
+  <circle cx="200" cy="210" r="190" fill="url(#ig)"/>
+  <circle cx="200" cy="210" r="70" fill="none" stroke="#E2BC72" stroke-opacity=".55" stroke-width="1.5"/>
+  <circle cx="200" cy="210" r="110" fill="none" stroke="#E2BC72" stroke-opacity=".32" stroke-width="1.2"/>
+  <circle cx="200" cy="210" r="150" fill="none" stroke="#E2BC72" stroke-opacity=".18" stroke-width="1"/>
+  <use href="#maple" x="268" y="330" width="80" height="80" fill="#A4502A" transform="rotate(18 308 370)"/>
+  <use href="#leaf" x="70" y="340" width="34" height="68" fill="#C8963E" transform="rotate(-36 87 374)"/>
+  <use href="#leaf" x="150" y="400" width="26" height="52" fill="#5F7A4E" transform="rotate(40 163 426)"/>
+</svg></div>"""
+
+def infl_registration():
+    parts = INFLAMMATION_PARTS
+    missing = [p["part"] for p in parts if not all(p[k] for k in ("title", "date", "time", "length", "price", "link", "text"))]
+    if missing:
+        raise SystemExit("Inflammation registration stage needs every field filled for: " + ", ".join(missing))
+    cards = "".join(f"""<article class="infl-part"><p class="tag">{p['part']}</p><h3>{p['title']}</h3>
+  <div class="meta"><span>{p['date']}</span><span>{p['time']}</span><span>{p['length']}</span><span>Live online</span></div>
+  <p>{p['text']}</p><div class="infl-buy"><span class="price">{p['price']}</span><a class="btn" href="{p['link']}">Register for {p['part']}</a></div></article>""" for p in parts)
+    return f"""<section class="parch" id="register"><div class="wrap">
+  <div class="center" style="margin-bottom:40px"><p class="eyebrow">Registration is open</p><h2>The two part series</h2></div>
+  <div class="infl-parts">{cards}</div>
+  <p class="fine center" style="margin-top:22px">For education purposes only. Your class link is emailed after you register.</p>
+</div></section>"""
+
+def infl_prelaunch():
+    return f"""<section class="parch" id="register"><div class="wrap narrow center">
+  <p class="eyebrow">Coming soon</p>
+  <h2>A two part educational experience</h2>
+  <p class="lead">More information and registration details will be available shortly.</p>
+  <p>Want to hear first? Follow along on <a href="{INSTAGRAM}">Instagram</a> or <a href="{FACEBOOK}">Facebook</a>, or join <a href="{SKOOL}">The Rebuild Path community on Skool</a>.</p>
+  <p class="fine" style="margin-top:18px">For education purposes only.</p>
+</div></section>"""
+
+if INFLAMMATION_LIVE:
+    themes = "".join(f"""<article class="infl-theme {key}"><div class="ico">{INFL_ICON[key]}</div><h3>{name}</h3><p>{intro}</p><ul class="ticks">{''.join(f'<li>{i}</li>' for i in items)}</ul></article>""" for name, intro, key, items in INFL_THEMES)
+    page("inflammation.html",
+         "Inflammation Through Traditional Chinese Medicine | A Two Part Series | The Rebuild Path",
+         "An upcoming two part educational series from The Rebuild Path on inflammation and the physical, mental and emotional connections seen through Traditional Chinese Medicine.",
+         f"""
+<section class="infl-hero dark">
+  {LEAVES}
+  <div class="wrap">
+    <div>
+      <p class="eyebrow">Become Your Own Wayfinder</p>
+      <h1>Inflammation: What Is Your Body Trying to Tell You?</h1>
+      <p class="lead">Understanding the physical, mental and emotional connections through Traditional Chinese Medicine.</p>
+      <p class="infl-flag">Coming soon: a two part educational series</p>
+    </div>
+    {infl_hero_media()}
+  </div>
+</section>
+<div class="rule"></div>
+
+<section class="cream">
+  <div class="wrap narrow infl-intro">
+    <p class="lead">When we think about inflammation, we often picture redness, swelling and pain.</p>
+    <p class="infl-q">But what about the symptoms that aren't as visible?</p>
+    <p>Digestive disturbances, difficulty sleeping, mental fog, muscle tension and emotional changes can sometimes accompany ongoing physical discomfort or illness.</p>
+    <p>Traditional Chinese Medicine offers a unique framework for understanding patterns throughout the body rather than examining symptoms in isolation.</p>
+    <p>Join The Rebuild Path for an upcoming two part educational series exploring these connections and learning practical ways to support your well being.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="center" style="margin-bottom:44px"><p class="eyebrow">What we will explore</p><h2>Three connected themes</h2></div>
+    <div class="infl-themes">{themes}</div>
+  </div>
+</section>
+
+{infl_registration() if INFLAMMATION_STAGE == "registration" else infl_prelaunch()}
+""")
+
 # ---------------- FAQ ----------------
 FAQ_ACU = [
     ("What is acupuncture?", "Acupuncture is one of the oldest parts of Traditional Chinese Medicine. Fine, sterile, single use needles are placed at specific points on the body and left in while you rest."),

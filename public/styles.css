@@ -255,3 +255,30 @@ details.qa[open]{border-color:var(--gold)}
 .form-done h2{font-size:clamp(28px,3vw,36px)}
 .page-head.photo.light{background:linear-gradient(90deg,rgba(21,42,30,.9) 0%,rgba(21,42,30,.66) 38%,rgba(21,42,30,.15) 72%,rgba(21,42,30,0) 100%),var(--bg) center 24%/cover no-repeat}
 @media (max-width:900px){.page-head.photo.light{background:linear-gradient(180deg,rgba(21,42,30,.35) 0%,rgba(21,42,30,.8) 55%,rgba(21,42,30,.9) 100%),var(--bg) center 30%/cover no-repeat}}
+
+/* inflammation series */
+.infl-hero{padding:84px 0 96px;overflow:hidden}
+.infl-hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center}
+.infl-hero h1{font-size:clamp(38px,5vw,60px)}
+.infl-flag{display:inline-block;margin-top:18px;border:1px solid var(--gold);color:var(--gold-light);border-radius:999px;padding:8px 18px;font-size:14px;letter-spacing:.08em;text-transform:uppercase}
+.infl-photo{border-radius:999px 999px 18px 18px;overflow:hidden;border:2px solid var(--gold);box-shadow:0 30px 60px rgba(0,0,0,.35);aspect-ratio:4/5;width:min(380px,100%);justify-self:center;background:var(--forest2)}
+.infl-photo img,.infl-photo svg{width:100%;height:100%;object-fit:cover;display:block}
+.infl-intro{text-align:center}
+.infl-intro .infl-q{font-family:var(--display);font-style:italic;font-weight:500;font-size:clamp(26px,3vw,34px);color:var(--rust);margin:6px 0 22px}
+.infl-themes{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.infl-theme{background:var(--page);border:1px solid var(--line);border-radius:var(--radius);padding:30px 28px;border-top:5px solid var(--moss);box-shadow:0 8px 24px rgba(21,42,30,.06)}
+.infl-theme.mind{border-top-color:var(--gold)}
+.infl-theme.heart{border-top-color:var(--rust)}
+.infl-theme .ico{width:50px;height:50px;border-radius:50%;background:var(--sage);display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+.infl-theme .ico svg{width:26px;height:26px}
+.infl-theme h3{font-size:27px}
+.infl-theme p{font-size:16px;color:var(--muted)}
+.infl-theme ul.ticks li{font-size:16px}
+.infl-parts{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.infl-part{background:var(--page);border:1px solid var(--line);border-radius:var(--radius);padding:28px}
+.infl-part .meta{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:15px;color:var(--muted);margin:4px 0 10px}
+.infl-buy{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:18px}
+@media (max-width:900px){.infl-hero .wrap,.infl-themes,.infl-parts{grid-template-columns:1fr}.infl-photo{width:min(300px,82%)}}
+.infl-hero{position:relative}
+.infl-hero .leafs{right:-30px;top:-20px;width:300px;height:240px;opacity:.95}
+@media (max-width:900px){.infl-hero .leafs{width:170px;height:140px;right:-40px;top:-10px;opacity:.7}}
