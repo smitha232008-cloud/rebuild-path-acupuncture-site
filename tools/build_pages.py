@@ -546,21 +546,18 @@ def infl_prelaunch():
   <h2>A two part educational experience</h2>
   <p class="lead">More information and registration details will be available shortly.</p>
   <div class="interest">
-    <form class="form" id="interest" action="https://formsubmit.co/{EMAIL_EDU}" method="POST" data-ajax="https://formsubmit.co/ajax/{EMAIL_EDU}" data-done="interest-done" data-sending="Adding you to the list, one moment.">
+    <form class="form" id="interest" action="https://formsubmit.co/{EMAIL_EDU}" method="POST">
       <h3>Interested?</h3>
       <p>Add your contact details, and I will email you directly when the class is ready.</p>
       <input type="hidden" name="_subject" value="Interest list: What Is Your Body Trying to Tell You?">
-      <input type="hidden" name="_next" value="{SITE}/thanks.html">
+      <input type="hidden" name="_next" value="{SITE}/list-thanks">
       <input type="hidden" name="_template" value="table">
       <input type="hidden" name="list" value="What Is Your Body Trying to Tell You? interest list">
       <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
       <label>Name<input type="text" name="name" required autocomplete="name"></label>
       <label>Email<input type="email" name="email" required autocomplete="email"></label>
       <button class="btn" type="submit">Add me to the list</button>
-      <p class="form-status" role="status" aria-live="polite" hidden></p>
-      <p class="form-status error form-error" hidden>Sorry, that did not go through. Please try again, or email <a href="mailto:{EMAIL_EDU}">{EMAIL_EDU}</a>.</p>
     </form>
-    <div class="form-done" id="interest-done" hidden tabindex="-1"><h3>Thank you, you're on the list.</h3><p>I will email you directly when the class is ready.</p></div>
   </div>
   <p style="margin-top:28px">You can also follow along on <a href="{INSTAGRAM}">Instagram</a> or <a href="{FACEBOOK}">Facebook</a>, or join <a href="{SKOOL}">The Rebuild Path community on Skool</a>.</p>
   <p class="fine" style="margin-top:12px">For education purposes only.</p>
@@ -693,6 +690,17 @@ page("contact.html",
       <div class="card"><h3>Mailing address</h3><p>{ADDRESS}</p></div>
     </aside>
   </div>
+</section>
+""")
+
+page("list-thanks.html",
+     "You're on the List | The Rebuild Path",
+     "Thank you for joining the interest list for What Is Your Body Trying to Tell You?",
+     f"""
+<section class="page-head dark photo" style="--bg:url(images/02-home-journey-meadow.webp)">
+  {LEAVES}
+  <div class="wrap"><p class="eyebrow">Interest list</p><h1>Thank you, you're on the list.</h1><p class="lead">I will email you directly when the class is ready.</p>
+  <div class="actions"><a class="btn gold" href="your-body.html">Back to the series</a><a class="btn ghost" href="{SKOOL}">Join the community</a></div></div>
 </section>
 """)
 
