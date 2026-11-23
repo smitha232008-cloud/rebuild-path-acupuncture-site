@@ -408,7 +408,7 @@ page("education.html",
       <p class="eyebrow">Online consultations</p>
       <h2>One on one: reconnect with your body</h2>
       <p>A private online session on how acupressure, meditation and movement can help you reconnect with your body. You learn points and practices you can use on your own, at your own pace, and leave with a plan that fits your day.</p>
-      <ul class="ticks"><li>45 minutes, online</li><li>Coaching and education only, no hands on treatment</li><li>Start with a free 15 minute discovery call</li></ul>
+      <ul class="ticks"><li>Online, by video call</li><li>Coaching and education only, no hands on treatment</li><li>Start with a free 15 minute discovery call</li></ul>
       <div class="actions"><a class="btn" href="{DISCOVERY}">Book a free discovery call</a><a class="btn ghost" href="{SMS}">Text to schedule a consultation</a></div>
       {FAQ_EDU_LINK}
     </div>
@@ -618,7 +618,7 @@ FAQ_ACU = [
     ("Who is the acupuncturist?", "Amber Smith, L.Ac., a licensed acupuncturist in Arizona and an NCBAHM Certified Diplomate in Acupuncture, with a Master of Acupuncture and years of experience as a paramedic."),
 ]
 FAQ_EDU = [
-    ("What happens in a one on one consultation?", "A 45 minute online session on how acupressure, meditation and movement can help you reconnect with your body. You learn points and practices you can use on your own. It is coaching and education only, with no hands on treatment."),
+    ("What happens in a one on one consultation?", "An online session on how acupressure, meditation and movement can help you reconnect with your body. You learn points and practices you can use on your own. It is coaching and education only, with no hands on treatment."),
     ("How do I get started?", f'Book a <a href="{DISCOVERY}">free 15 minute discovery call</a>. You talk through what you are working on, and together you decide whether a consultation, a workshop or the community is the right next step.'),
     ("Where do consultations and workshops happen?", "Online, by video call. Your link is sent to you before your session or workshop."),
     ("How do I join an online workshop?", "Reserve your spot with the payment link on the workshop card. Your class link and joining instructions are emailed to you before the workshop."),
