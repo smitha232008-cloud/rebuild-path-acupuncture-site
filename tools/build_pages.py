@@ -155,7 +155,7 @@ SCRIPT = """<script>
     });
   });
   window.addEventListener('load',function(){
-    if(location.hash.length>1){var el=document.getElementById(location.hash.slice(1)); if(el){setTimeout(function(){el.scrollIntoView({block:'start'});},60);}}
+    if(location.hash.length>1){var el=document.getElementById(location.hash.slice(1)); if(el){var go=function(){el.scrollIntoView({block:'start',behavior:'instant'});}; setTimeout(go,60); setTimeout(go,600);}}
   });
   var b=document.querySelector('.menu-btn'), n=document.querySelector('nav.main');
   if(b&&n){b.addEventListener('click',function(){var o=n.classList.toggle('open');b.setAttribute('aria-expanded',o);});}
@@ -500,12 +500,9 @@ INFLAMMATION_PARTS = [
     dict(part="Part 2", title=None, date=None, time=None, length=None, price=None, link=None, text=None),
 ]
 INFL_THEMES = [
-    ("Physical health", "Explore how Traditional Chinese Medicine interprets patterns involving:", "body",
-     ["Internal Heat and Cold", "Qi stagnation", "Blood stasis", "Dampness and fluid metabolism", "Digestive discomfort", "Pain, tension and swelling"]),
-    ("Mental well being", "Explore traditional connections between internal imbalances and:", "mind",
-     ["Mental fatigue", "Difficulty concentrating", "Restlessness", "Sleep disturbances", "Repetitive thinking", "Mental clarity"]),
-    ("Emotional well being", "Explore how Traditional Chinese Medicine traditionally understands the relationship between Qi movement and:", "heart",
-     ["Anger and frustration", "Emotional tension", "Anxiety and restlessness"]),
+    ("Physical", "How your body shows you when something is out of balance, and what Traditional Chinese Medicine looks for.", "body", []),
+    ("Mental", "How focus, sleep and a busy mind connect to what is happening in the body.", "mind", []),
+    ("Emotional", "How emotions and the body influence each other, and simple ways to support both.", "heart", []),
 ]
 INFL_ICON = {
     "body": '<svg viewBox="0 0 24 24" fill="none" stroke="#2C4F3B" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="4.5" r="2"/><path d="M12 7v7M8 10l4-1.5 4 1.5M9.5 21l2.5-7 2.5 7"/></svg>',
@@ -567,7 +564,7 @@ def infl_prelaunch():
 </div></section>"""
 
 if INFLAMMATION_LIVE:
-    themes = "".join(f"""<article class="infl-theme {key}"><div class="ico">{INFL_ICON[key]}</div><h3>{name}</h3><p>{intro}</p><ul class="ticks">{''.join(f'<li>{i}</li>' for i in items)}</ul></article>""" for name, intro, key, items in INFL_THEMES)
+    themes = "".join(f"""<article class="infl-theme {key}"><div class="ico">{INFL_ICON[key]}</div><h3>{name}</h3><p>{intro}</p></article>""" for name, intro, key, items in INFL_THEMES)
     page("your-body.html",
          "What Is Your Body Trying to Tell You? | A Two Part Series | The Rebuild Path",
          "An upcoming two part educational series from The Rebuild Path on how Traditional Chinese Medicine understands the physical, mental and emotional connections in the body, and how its fundamentals can help you.",
@@ -589,17 +586,14 @@ if INFLAMMATION_LIVE:
 
 <section class="cream">
   <div class="wrap narrow infl-intro">
-    <p class="lead">When something feels off, we often focus on the symptom in front of us: the pain, the tension, the restless night.</p>
-    <p class="infl-q">But what about the symptoms that aren't as visible?</p>
-    <p>Digestive disturbances, difficulty sleeping, mental fog, muscle tension and emotional changes can sometimes accompany ongoing physical discomfort or illness.</p>
-    <p>Traditional Chinese Medicine offers a unique framework for understanding how these patterns develop throughout the body, rather than examining symptoms in isolation. Its fundamentals give you a way to read what your body is telling you.</p>
-    <p>Join The Rebuild Path for an upcoming two part educational series exploring these connections and learning practical ways to support your well being.</p>
+    <p class="lead">When something feels off, the signs aren't always where we expect them.</p>
+    <p>Traditional Chinese Medicine looks at the whole person to understand what your body is trying to tell you. In this two part series, you'll learn its fundamentals in a simple, practical way, and how they connect your physical, mental and emotional well being.</p>
   </div>
 </section>
 
 <section>
   <div class="wrap">
-    <div class="center" style="margin-bottom:44px"><p class="eyebrow">What we will explore</p><h2>Three connected themes</h2></div>
+    <div class="center" style="margin-bottom:44px"><p class="eyebrow">What we will explore</p><h2>Physical, mental and emotional</h2></div>
     <div class="infl-themes">{themes}</div>
   </div>
 </section>

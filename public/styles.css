@@ -288,3 +288,6 @@ details.qa[open]{border-color:var(--gold)}
 .interest .form-done{text-align:center}
 .interest .form-done h3{font-size:28px}
 section[id]{scroll-margin-top:84px}
+.infl-theme{text-align:center}
+.infl-theme .ico{margin:0 auto 14px}
+.infl-theme p{font-size:17px;color:var(--ink);margin:0}

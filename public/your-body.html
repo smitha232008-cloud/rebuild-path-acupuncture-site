@@ -51,18 +51,15 @@
 
 <section class="cream">
   <div class="wrap narrow infl-intro">
-    <p class="lead">When something feels off, we often focus on the symptom in front of us: the pain, the tension, the restless night.</p>
-    <p class="infl-q">But what about the symptoms that aren't as visible?</p>
-    <p>Digestive disturbances, difficulty sleeping, mental fog, muscle tension and emotional changes can sometimes accompany ongoing physical discomfort or illness.</p>
-    <p>Traditional Chinese Medicine offers a unique framework for understanding how these patterns develop throughout the body, rather than examining symptoms in isolation. Its fundamentals give you a way to read what your body is telling you.</p>
-    <p>Join The Rebuild Path for an upcoming two part educational series exploring these connections and learning practical ways to support your well being.</p>
+    <p class="lead">When something feels off, the signs aren't always where we expect them.</p>
+    <p>Traditional Chinese Medicine looks at the whole person to understand what your body is trying to tell you. In this two part series, you'll learn its fundamentals in a simple, practical way, and how they connect your physical, mental and emotional well being.</p>
   </div>
 </section>
 
 <section>
   <div class="wrap">
-    <div class="center" style="margin-bottom:44px"><p class="eyebrow">What we will explore</p><h2>Three connected themes</h2></div>
-    <div class="infl-themes"><article class="infl-theme body"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#2C4F3B" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="4.5" r="2"/><path d="M12 7v7M8 10l4-1.5 4 1.5M9.5 21l2.5-7 2.5 7"/></svg></div><h3>Physical health</h3><p>Explore how Traditional Chinese Medicine interprets patterns involving:</p><ul class="ticks"><li>Internal Heat and Cold</li><li>Qi stagnation</li><li>Blood stasis</li><li>Dampness and fluid metabolism</li><li>Digestive discomfort</li><li>Pain, tension and swelling</li></ul></article><article class="infl-theme mind"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#2C4F3B" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 20v-3a6 6 0 1 1 6 0v3"/><path d="M9.5 9.5a2.5 2.5 0 0 1 5 0c0 1.5-2.5 2-2.5 3.5M12 15.5v.01"/></svg></div><h3>Mental well being</h3><p>Explore traditional connections between internal imbalances and:</p><ul class="ticks"><li>Mental fatigue</li><li>Difficulty concentrating</li><li>Restlessness</li><li>Sleep disturbances</li><li>Repetitive thinking</li><li>Mental clarity</li></ul></article><article class="infl-theme heart"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#2C4F3B" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7.5-4.6-7.5-10A4.3 4.3 0 0 1 12 7.4 4.3 4.3 0 0 1 19.5 10c0 5.4-7.5 10-7.5 10z"/></svg></div><h3>Emotional well being</h3><p>Explore how Traditional Chinese Medicine traditionally understands the relationship between Qi movement and:</p><ul class="ticks"><li>Anger and frustration</li><li>Emotional tension</li><li>Anxiety and restlessness</li></ul></article></div>
+    <div class="center" style="margin-bottom:44px"><p class="eyebrow">What we will explore</p><h2>Physical, mental and emotional</h2></div>
+    <div class="infl-themes"><article class="infl-theme body"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#2C4F3B" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="4.5" r="2"/><path d="M12 7v7M8 10l4-1.5 4 1.5M9.5 21l2.5-7 2.5 7"/></svg></div><h3>Physical</h3><p>How your body shows you when something is out of balance, and what Traditional Chinese Medicine looks for.</p></article><article class="infl-theme mind"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#2C4F3B" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 20v-3a6 6 0 1 1 6 0v3"/><path d="M9.5 9.5a2.5 2.5 0 0 1 5 0c0 1.5-2.5 2-2.5 3.5M12 15.5v.01"/></svg></div><h3>Mental</h3><p>How focus, sleep and a busy mind connect to what is happening in the body.</p></article><article class="infl-theme heart"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#2C4F3B" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7.5-4.6-7.5-10A4.3 4.3 0 0 1 12 7.4 4.3 4.3 0 0 1 19.5 10c0 5.4-7.5 10-7.5 10z"/></svg></div><h3>Emotional</h3><p>How emotions and the body influence each other, and simple ways to support both.</p></article></div>
   </div>
 </section>
 
@@ -130,7 +127,7 @@
     });
   });
   window.addEventListener('load',function(){
-    if(location.hash.length>1){var el=document.getElementById(location.hash.slice(1)); if(el){setTimeout(function(){el.scrollIntoView({block:'start'});},60);}}
+    if(location.hash.length>1){var el=document.getElementById(location.hash.slice(1)); if(el){var go=function(){el.scrollIntoView({block:'start',behavior:'instant'});}; setTimeout(go,60); setTimeout(go,600);}}
   });
   var b=document.querySelector('.menu-btn'), n=document.querySelector('nav.main');
   if(b&&n){b.addEventListener('click',function(){var o=n.classList.toggle('open');b.setAttribute('aria-expanded',o);});}
