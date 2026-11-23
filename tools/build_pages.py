@@ -119,7 +119,7 @@ def event_cards(file):
         return f'<div class="date"><small>{o.get("when", "Anytime")}</small><b>{icon}</b><span>{o["kind"]}</span></div>'
     ongoing = "".join(f"""<article class="event ongoing">
   {ongoing_media(o)}
-  <div><p class="tag">{o['kind']}</p><h3>{f'<a class="plain" href="{o["link"]}">{o["title"]}</a>' if o.get("image") else o['title']}</h3><p>{o['text']}</p></div>
+  <div><p class="tag">{o['kind']}</p><h3>{f'<a class="plain stretch" href="{o["link"]}">{o["title"]}</a>' if o.get("image") else o['title']}</h3><p>{o['text']}</p></div>
   <div><a class="btn ghost" href="{o['link']}">{o['cta']}</a></div>
 </article>""" for o in ONGOING if file in o["pages"])
     return f"""<div class="events" data-events>{''.join(out)}
