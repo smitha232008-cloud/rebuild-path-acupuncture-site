@@ -41,7 +41,7 @@
 <div class="rule"></div>
 <section>
   <div class="wrap contact-grid">
-    <form class="form" id="inquiry" action="https://formsubmit.co/therebuildpath@gmail.com" method="POST" data-ajax="https://formsubmit.co/ajax/therebuildpath@gmail.com">
+    <form class="form" id="inquiry" action="https://formsubmit.co/therebuildpath@gmail.com" method="POST" data-ajax="https://formsubmit.co/ajax/therebuildpath@gmail.com" data-done="inquiry-done" data-sending="Sending your message. This can take up to 30 seconds.">
       <input type="hidden" name="_subject" value="New inquiry from The Rebuild Path website">
       <input type="hidden" name="_next" value="https://therebuildpath.org/thanks">
       <input type="hidden" name="_template" value="table">
@@ -52,6 +52,7 @@
       <p class="fine">Please do not include health information in this form.</p>
       <button class="btn" type="submit">Send message</button>
       <p class="form-status" role="status" aria-live="polite" hidden></p>
+      <p class="form-status error form-error" hidden>Sorry, your message did not go through. Please try again, or email <a href="mailto:therebuildpath@gmail.com">therebuildpath@gmail.com</a> or text <a href="sms:+19283166511">(928) 316 6511</a>.</p>
     </form>
     <div class="form-done" id="inquiry-done" hidden tabindex="-1">
       <h2>Thank you, your message was sent.</h2>
@@ -65,31 +66,6 @@
     </aside>
   </div>
 </section>
-<script>
-(function(){
-  var f=document.getElementById('inquiry'); if(!f||!window.fetch) return;
-  var st=f.querySelector('.form-status'), btn=f.querySelector('button[type=submit]'), done=document.getElementById('inquiry-done');
-  f.addEventListener('submit',function(e){
-    e.preventDefault();
-    if(f._honey&&f._honey.value) return;
-    btn.disabled=true; btn.textContent='Sending, one moment';
-    st.hidden=false; st.className='form-status'; st.textContent='Sending your message. This can take up to 30 seconds.';
-    var data={}; new FormData(f).forEach(function(v,k){data[k]=v;});
-    var ctl=window.AbortController?new AbortController():null; var t=setTimeout(function(){if(ctl)ctl.abort();},45000);
-    fetch(f.getAttribute('data-ajax'),{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(data),signal:ctl?ctl.signal:undefined})
-      .then(function(r){return r.json().catch(function(){return {};}).then(function(j){return {ok:r.ok,j:j};});})
-      .then(function(res){
-        clearTimeout(t);
-        if(res.ok&&String(res.j.success)!=='false'){f.hidden=true; done.hidden=false; done.focus();}
-        else{throw new Error(res.j.message||'not sent');}
-      })
-      .catch(function(){
-        clearTimeout(t); btn.disabled=false; btn.textContent='Send message';
-        st.className='form-status error'; st.innerHTML='Sorry, your message did not go through. Please try again, or email <a href="mailto:therebuildpath@gmail.com">therebuildpath@gmail.com</a> or text <a href="sms:+19283166511">(928) 316 6511</a>.';
-      });
-  });
-})();
-</script>
 
 </main>
 <div class="rule"></div>
@@ -116,6 +92,22 @@
     if(!left){var e=box.querySelector('[data-empty]'); if(e) e.hidden=false;}
   });
   document.querySelectorAll('section[data-ends]').forEach(function(sec){if(Date.parse(sec.getAttribute('data-ends'))<now) sec.remove();});
+  document.querySelectorAll('form[data-ajax]').forEach(function(f){
+    if(!window.fetch) return;
+    var st=f.querySelector('.form-status'), er=f.querySelector('.form-error'), btn=f.querySelector('button[type=submit]'), label=btn.textContent, done=document.getElementById(f.getAttribute('data-done'));
+    f.addEventListener('submit',function(e){
+      e.preventDefault();
+      if(f._honey&&f._honey.value) return;
+      btn.disabled=true; btn.textContent='Sending, one moment'; if(er) er.hidden=true;
+      st.hidden=false; st.textContent=f.getAttribute('data-sending')||'Sending. This can take up to 30 seconds.';
+      var data={}; new FormData(f).forEach(function(v,k){data[k]=v;});
+      var ctl=window.AbortController?new AbortController():null; var t=setTimeout(function(){if(ctl)ctl.abort();},45000);
+      fetch(f.getAttribute('data-ajax'),{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(data),signal:ctl?ctl.signal:undefined})
+        .then(function(r){return r.json().catch(function(){return {};}).then(function(j){return {ok:r.ok,j:j};});})
+        .then(function(res){clearTimeout(t); if(res.ok&&String(res.j.success)!=='false'){f.hidden=true; if(done){done.hidden=false; done.focus();}} else {throw new Error('not sent');}})
+        .catch(function(){clearTimeout(t); btn.disabled=false; btn.textContent=label; st.hidden=true; if(er) er.hidden=false;});
+    });
+  });
   var b=document.querySelector('.menu-btn'), n=document.querySelector('nav.main');
   if(b&&n){b.addEventListener('click',function(){var o=n.classList.toggle('open');b.setAttribute('aria-expanded',o);});}
 })();

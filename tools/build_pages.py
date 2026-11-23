@@ -44,6 +44,16 @@ EVENTS = [
 # Ongoing offers with no date. Always shown after the dated events.
 ONGOING = [
     dict(
+        title="What Is Your Body Trying to Tell You?",
+        kind="Coming soon",
+        text="A two part educational series on how Traditional Chinese Medicine connects the physical, mental and emotional. Join the interest list to hear first.",
+        link="your-body.html#register",
+        cta="Join the interest list",
+        icon="leaf",
+        when="Soon",
+        pages=["index.html", "education.html"],
+    ),
+    dict(
         title="Goals Workshop",
         kind="In the Skool classroom",
         text="Work through the Goals workshop at your own pace in The Rebuild Path classroom on Skool, with the community there for support.",
@@ -103,7 +113,7 @@ def event_cards(file):
   <div><div class="price">{e['price']}</div><a class="btn" href="{e['link']}">{e['cta']}</a></div>
 </article>""")
     ongoing = "".join(f"""<article class="event ongoing">
-  <div class="date"><small>Anytime</small><b>{GOAL if o['link'] == SKOOL_CLASSROOM else CALL}</b><span>{o['kind']}</span></div>
+  <div class="date"><small>{o.get('when', 'Anytime')}</small><b>{dict(leaf=LEAFICON, goal=GOAL, call=CALL)[o.get('icon') or ('goal' if o['link'] == SKOOL_CLASSROOM else 'call')]}</b><span>{o['kind']}</span></div>
   <div><p class="tag">{o['kind']}</p><h3>{o['title']}</h3><p>{o['text']}</p></div>
   <div><a class="btn ghost" href="{o['link']}">{o['cta']}</a></div>
 </article>""" for o in ONGOING if file in o["pages"])
@@ -114,6 +124,7 @@ def event_cards(file):
 
 
 GOAL = '<svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#E2BC72" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5" fill="#E2BC72"/></svg>'
+LEAFICON = '<svg viewBox="0 0 40 80" width="22" height="40" aria-hidden="true"><use href="#leaf" fill="#E2BC72"/></svg>'
 CALL = '<svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#E2BC72" stroke-width="1.6" stroke-linejoin="round"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="M16 10l5-3v10l-5-3z"/></svg>'
 
 SCRIPT = """<script>
@@ -127,6 +138,22 @@ SCRIPT = """<script>
     if(!left){var e=box.querySelector('[data-empty]'); if(e) e.hidden=false;}
   });
   document.querySelectorAll('section[data-ends]').forEach(function(sec){if(Date.parse(sec.getAttribute('data-ends'))<now) sec.remove();});
+  document.querySelectorAll('form[data-ajax]').forEach(function(f){
+    if(!window.fetch) return;
+    var st=f.querySelector('.form-status'), er=f.querySelector('.form-error'), btn=f.querySelector('button[type=submit]'), label=btn.textContent, done=document.getElementById(f.getAttribute('data-done'));
+    f.addEventListener('submit',function(e){
+      e.preventDefault();
+      if(f._honey&&f._honey.value) return;
+      btn.disabled=true; btn.textContent='Sending, one moment'; if(er) er.hidden=true;
+      st.hidden=false; st.textContent=f.getAttribute('data-sending')||'Sending. This can take up to 30 seconds.';
+      var data={}; new FormData(f).forEach(function(v,k){data[k]=v;});
+      var ctl=window.AbortController?new AbortController():null; var t=setTimeout(function(){if(ctl)ctl.abort();},45000);
+      fetch(f.getAttribute('data-ajax'),{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(data),signal:ctl?ctl.signal:undefined})
+        .then(function(r){return r.json().catch(function(){return {};}).then(function(j){return {ok:r.ok,j:j};});})
+        .then(function(res){clearTimeout(t); if(res.ok&&String(res.j.success)!=='false'){f.hidden=true; if(done){done.hidden=false; done.focus();}} else {throw new Error('not sent');}})
+        .catch(function(){clearTimeout(t); btn.disabled=false; btn.textContent=label; st.hidden=true; if(er) er.hidden=false;});
+    });
+  });
   var b=document.querySelector('.menu-btn'), n=document.querySelector('nav.main');
   if(b&&n){b.addEventListener('click',function(){var o=n.classList.toggle('open');b.setAttribute('aria-expanded',o);});}
 })();
@@ -186,7 +213,7 @@ def page(file, title, desc, body, schema=False):
     # Cloudflare serves pages without ".html", so link to the short addresses (no redirect hop).
     import re
     html = html.replace('href="index.html"', 'href="/"')
-    html = re.sub(r'href="([a-z]+)\.html(#[a-z]+)?"', lambda m: f'href="/{m.group(1)}{m.group(2) or ""}"', html)
+    html = re.sub(r'href="([a-z-]+)\.html(#[a-z]+)?"', lambda m: f'href="/{m.group(1)}{m.group(2) or ""}"', html)
     html = html.replace(f'{SITE}/thanks.html', f'{SITE}/thanks')
     (OUT / file).write_text(html)
 
@@ -462,7 +489,7 @@ page("about.html",
 # Stage "registration": full descriptions, prices and Square buttons. Switch only when every
 # field in INFLAMMATION_PARTS is filled in and Amber approves.
 # The page is built only with INFLAMMATION_LIVE=1 until Amber approves it (Nov 23, 2026).
-INFLAMMATION_LIVE = os.environ.get("SERIES_LIVE") == "1"
+INFLAMMATION_LIVE = os.environ.get("SERIES_LIVE", "1") == "1"  # live from Nov 23, 2026 (sneak peek)
 INFLAMMATION_STAGE = os.environ.get("SERIES_STAGE", "prelaunch")
 INFLAMMATION_IMAGE = "images/series-meditation.webp"  # Amber's promo image of a meditating woman; not supplied yet
 INFLAMMATION_PARTS = [
@@ -518,8 +545,25 @@ def infl_prelaunch():
   <p class="eyebrow">Coming soon</p>
   <h2>A two part educational experience</h2>
   <p class="lead">More information and registration details will be available shortly.</p>
-  <p>Want to hear first? Follow along on <a href="{INSTAGRAM}">Instagram</a> or <a href="{FACEBOOK}">Facebook</a>, or join <a href="{SKOOL}">The Rebuild Path community on Skool</a>.</p>
-  <p class="fine" style="margin-top:18px">For education purposes only.</p>
+  <div class="interest">
+    <form class="form" id="interest" action="https://formsubmit.co/{EMAIL_EDU}" method="POST" data-ajax="https://formsubmit.co/ajax/{EMAIL_EDU}" data-done="interest-done" data-sending="Adding you to the list, one moment.">
+      <h3>Interested?</h3>
+      <p>Add your contact details, and I will email you directly when the class is ready.</p>
+      <input type="hidden" name="_subject" value="Interest list: What Is Your Body Trying to Tell You?">
+      <input type="hidden" name="_next" value="{SITE}/thanks.html">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="list" value="What Is Your Body Trying to Tell You? interest list">
+      <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <label>Name<input type="text" name="name" required autocomplete="name"></label>
+      <label>Email<input type="email" name="email" required autocomplete="email"></label>
+      <button class="btn" type="submit">Add me to the list</button>
+      <p class="form-status" role="status" aria-live="polite" hidden></p>
+      <p class="form-status error form-error" hidden>Sorry, that did not go through. Please try again, or email <a href="mailto:{EMAIL_EDU}">{EMAIL_EDU}</a>.</p>
+    </form>
+    <div class="form-done" id="interest-done" hidden tabindex="-1"><h3>Thank you, you're on the list.</h3><p>I will email you directly when the class is ready.</p></div>
+  </div>
+  <p style="margin-top:28px">You can also follow along on <a href="{INSTAGRAM}">Instagram</a> or <a href="{FACEBOOK}">Facebook</a>, or join <a href="{SKOOL}">The Rebuild Path community on Skool</a>.</p>
+  <p class="fine" style="margin-top:12px">For education purposes only.</p>
 </div></section>"""
 
 if INFLAMMATION_LIVE:
@@ -625,7 +669,7 @@ page("contact.html",
 <div class="rule"></div>
 <section>
   <div class="wrap contact-grid">
-    <form class="form" id="inquiry" action="https://formsubmit.co/{EMAIL_EDU}" method="POST" data-ajax="https://formsubmit.co/ajax/{EMAIL_EDU}">
+    <form class="form" id="inquiry" action="https://formsubmit.co/{EMAIL_EDU}" method="POST" data-ajax="https://formsubmit.co/ajax/{EMAIL_EDU}" data-done="inquiry-done" data-sending="Sending your message. This can take up to 30 seconds.">
       <input type="hidden" name="_subject" value="New inquiry from The Rebuild Path website">
       <input type="hidden" name="_next" value="{SITE}/thanks.html">
       <input type="hidden" name="_template" value="table">
@@ -636,6 +680,7 @@ page("contact.html",
       <p class="fine">Please do not include health information in this form.</p>
       <button class="btn" type="submit">Send message</button>
       <p class="form-status" role="status" aria-live="polite" hidden></p>
+      <p class="form-status error form-error" hidden>Sorry, your message did not go through. Please try again, or email <a href="mailto:{EMAIL_EDU}">{EMAIL_EDU}</a> or text <a href="{SMS}">{PHONE}</a>.</p>
     </form>
     <div class="form-done" id="inquiry-done" hidden tabindex="-1">
       <h2>Thank you, your message was sent.</h2>
@@ -649,31 +694,6 @@ page("contact.html",
     </aside>
   </div>
 </section>
-<script>
-(function(){{
-  var f=document.getElementById('inquiry'); if(!f||!window.fetch) return;
-  var st=f.querySelector('.form-status'), btn=f.querySelector('button[type=submit]'), done=document.getElementById('inquiry-done');
-  f.addEventListener('submit',function(e){{
-    e.preventDefault();
-    if(f._honey&&f._honey.value) return;
-    btn.disabled=true; btn.textContent='Sending, one moment';
-    st.hidden=false; st.className='form-status'; st.textContent='Sending your message. This can take up to 30 seconds.';
-    var data={{}}; new FormData(f).forEach(function(v,k){{data[k]=v;}});
-    var ctl=window.AbortController?new AbortController():null; var t=setTimeout(function(){{if(ctl)ctl.abort();}},45000);
-    fetch(f.getAttribute('data-ajax'),{{method:'POST',headers:{{'Content-Type':'application/json','Accept':'application/json'}},body:JSON.stringify(data),signal:ctl?ctl.signal:undefined}})
-      .then(function(r){{return r.json().catch(function(){{return {{}};}}).then(function(j){{return {{ok:r.ok,j:j}};}});}})
-      .then(function(res){{
-        clearTimeout(t);
-        if(res.ok&&String(res.j.success)!=='false'){{f.hidden=true; done.hidden=false; done.focus();}}
-        else{{throw new Error(res.j.message||'not sent');}}
-      }})
-      .catch(function(){{
-        clearTimeout(t); btn.disabled=false; btn.textContent='Send message';
-        st.className='form-status error'; st.innerHTML='Sorry, your message did not go through. Please try again, or email <a href="mailto:{EMAIL_EDU}">{EMAIL_EDU}</a> or text <a href="{SMS}">{PHONE}</a>.';
-      }});
-  }});
-}})();
-</script>
 """)
 
 page("thanks.html",

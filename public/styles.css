@@ -282,3 +282,8 @@ details.qa[open]{border-color:var(--gold)}
 .infl-hero{position:relative}
 .infl-hero .leafs{right:-30px;top:-20px;width:300px;height:240px;opacity:.95}
 @media (max-width:900px){.infl-hero .leafs{width:170px;height:140px;right:-40px;top:-10px;opacity:.7}}
+.interest{max-width:520px;margin:30px auto 0;text-align:left}
+.interest .form h3{font-size:28px;margin-bottom:4px}
+.interest .form>p{font-size:16px}
+.interest .form-done{text-align:center}
+.interest .form-done h3{font-size:28px}
